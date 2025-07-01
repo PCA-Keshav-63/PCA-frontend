@@ -1,0 +1,18 @@
+export const CATEGORIES = [
+  { name: "Restaurants", icon: "🍽️", count: "2,500+" },
+  { name: "Healthcare", icon: "🏥", count: "1,800+" },
+  { name: "Beauty & Spa", icon: "💄", count: "1,200+" },
+  { name: "Home Services", icon: "🏠", count: "3,000+" },
+  { name: "Automotive", icon: "🚗", count: "900+" },
+  { name: "Education", icon: "📚", count: "1,500+" },
+  { name: "Real Estate", icon: "🏢", count: "800+" },
+  { name: "Travel", icon: "✈️", count: "600+" },
+  { name: "Restaurants", icon: "🍽️", count: "2,500+" },
+  { name: "Healthcare", icon: "🏥", count: "1,800+" },
+  { name: "Beauty & Spa", icon: "💄", count: "1,200+" },
+  { name: "Home Services", icon: "🏠", count: "3,000+" },
+  { name: "Automotive", icon: "🚗", count: "900+" },
+  { name: "Education", icon: "📚", count: "1,500+" },
+  { name: "Real Estate", icon: "🏢", count: "800+" },
+  { name: "Travel", icon: "✈️", count: "600+" },
+]

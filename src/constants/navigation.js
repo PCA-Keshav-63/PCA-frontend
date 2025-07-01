@@ -1,0 +1,35 @@
+export const ROLE_NAVIGATION = {
+  user: [
+    { name: "Home", path: "/" },
+    { name: "Dashboard", path: "/dashboard" },
+    { name: "Search", path: "/search" },
+    { name: "My Bookings", path: "/bookings" },
+    { name: "Reviews", path: "/reviews" },
+    { name: "Profile", path: "/profile" },
+  ],
+  owner: [
+    { name: "Home", path: "/" },
+    { name: "Owner Dashboard", path: "/owner-dashboard" },
+    { name: "My Listings", path: "/listings" },
+    { name: "Bookings", path: "/owner-bookings" },
+    { name: "Reviews", path: "/owner-reviews" },
+    { name: "Profile", path: "/profile" },
+  ],
+  agent: [
+    { name: "Home", path: "/" },
+    { name: "Agent Dashboard", path: "/agent-dashboard" },
+    { name: "Add Listings", path: "/add-listings" },
+    { name: "Verify Listings", path: "/verify-listings" },
+    { name: "Area Reports", path: "/area-reports" },
+    { name: "Profile", path: "/profile" },
+  ],
+  admin: [
+    { name: "Home", path: "/" },
+    { name: "Admin Dashboard", path: "/admin-dashboard" },
+    { name: "All Listings", path: "/admin-listings" },
+    { name: "Users", path: "/admin-users" },
+    { name: "Moderation", path: "/moderation" },
+    { name: "Payments", path: "/payments" },
+    { name: "Reports", path: "/admin-reports" },
+  ],
+}
