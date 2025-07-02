@@ -5,7 +5,7 @@
 // const API_URL =
 //   import.meta.env.MODE === "development"
 //     ? "https://pincodeads.onrender.com/api/v1.0"
-//     : "";
+//     : "https://pincodeads.onrender.com/api/v1.0";
 
 // axios.defaults.withCredentials = true; // Allow sending cookies
 
@@ -350,10 +350,7 @@ import { toast } from "react-toastify";
 const API_URL =
   import.meta.env.MODE === "development"
     ? "https://pincodeads.onrender.com/api/v1.0"
-    : "https://pincodeads.onrender.com/api/v1.0";
-//   import.meta.env.MODE === "development"
-//     ? "https://pincodeads.onrender.com/api/v1.0"
-//     : "https://pincodeads.onrender.com/api/v1.0";
+    : "";
 
 // axios.defaults.withCredentials = true; // Allow sending cookies
 axios.defaults.withCredentials = true; // Allow sending cookies
