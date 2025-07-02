@@ -107,11 +107,14 @@
 
 
 
+
+
 import React, { useState } from "react"
 import { Lock, Mail, KeyRound } from "lucide-react"
 import { useAuthStore } from "../store/authStore"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useParams } from "react-router-dom"
+import toast from "react-hot-toast"
 
 export default function ResetPasswordPage() {
   const location = useLocation()
@@ -130,7 +133,7 @@ export default function ResetPasswordPage() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (newPassword !== confirmPassword) {
-      alert("Passwords do not match")
+      toast.error("Passwords do not match")
       return
     }
     setLoading(true);
@@ -139,7 +142,7 @@ export default function ResetPasswordPage() {
       await resetPassword({ email, otp, newPassword })
       navigate("/")
     } catch {
-        alert("Error resetting password")
+        toast.error("Failed to reset password. Please try again.")
     }
     setLoading(false);
   }

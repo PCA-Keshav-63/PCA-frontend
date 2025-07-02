@@ -1,4 +1,3 @@
-
 // "use client"
 // import { useState, useRef } from "react"
 // import { Search, MapPin, Sparkles } from "lucide-react"
@@ -202,7 +201,7 @@
 //             ))}
 //           </div>
 
-//           {/* Example: Show search results */} 
+//           {/* Example: Show search results */}
 //           {searchResults.length > 0 && (
 //             <div className="mt-10 bg-white/80 rounded-xl p-6 shadow-lg">
 //               <h2 className="text-xl font-bold mb-4 text-gray-800">Search Results</h2>
@@ -225,35 +224,145 @@
 
 // export default HeroSection
 
-
-
-
-
-
-"use client"
-import React, { useState, useRef, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import { Search, MapPin, Sparkles } from "lucide-react"
-import { useApp } from "../../context/AppContext.jsx"
+"use client";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Search, MapPin, Sparkles, AlertTriangle, Clock } from "lucide-react";
+import { useApp } from "../../context/AppContext.jsx";
+import { toast } from "react-hot-toast";
 
 export default function HeroSection() {
-  const { state, dispatch } = useApp()
-  const { searchQuery, location } = state
-const serviceFields = ["title", "businessName", "categoryName", "subcategoryName", "keyword"]
-const locationFields = ["address", "pincode", "district", "city"]
+  const { state, dispatch } = useApp();
+  const { searchQuery, location } = state;
+  const serviceFields = [
+    "title",
+    "businessName",
+    "categoryName",
+    "subcategoryName",
+    "keyword",
+  ];
+  const locationFields = ["address", "pincode", "district", "city"];
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const [serverStatus, setServerStatus] = useState({
+    isServerAvailable: true,
+    countdownTime: 180, // 3 minutes in seconds
+    checkInterval: null,
+  });
 
   // Suggestions for service fields
-  const [serviceSuggestions, setServiceSuggestions] = useState([])
-  const [showServiceSuggestions, setShowServiceSuggestions] = useState(false)
+  const [serviceSuggestions, setServiceSuggestions] = useState([]);
+  const [showServiceSuggestions, setShowServiceSuggestions] = useState(false);
   // Suggestions for location fields
-  const [locationSuggestions, setLocationSuggestions] = useState([])
-  const [showLocationSuggestions, setShowLocationSuggestions] = useState(false)
-  const [searchResults, setSearchResults] = useState([])
+  const [locationSuggestions, setLocationSuggestions] = useState([]);
+  const [showLocationSuggestions, setShowLocationSuggestions] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
 
-  const serviceInputRef = useRef(null)
-  const locationInputRef = useRef(null)
+  const serviceInputRef = useRef(null);
+  const locationInputRef = useRef(null);
+
+
+// Function to check server status
+    const checkServerStatus = async () => {
+    try {
+      const response = await fetch("https://pincodeads.onrender.com", {
+        method: "GET",
+        headers: {
+          "Cache-Control": "no-cache",
+        },
+      });
+
+      if (response.ok) {
+        // Server is back
+        if (!serverStatus.isServerAvailable) {
+          setServerStatus((prev) => ({
+            ...prev,
+            isServerAvailable: true,
+            countdownTime: 180,
+          }));
+
+          // Show toast notification
+          toast.success("We are back!", {
+            duration: 5000,
+            position: "top-center",
+            style: {
+              background: "#4CAF50",
+              color: "white",
+              fontWeight: "bold",
+              padding: "16px",
+              borderRadius: "10px",
+            },
+            icon: "🎉",
+          });
+
+          // Clear interval if it exists
+          if (serverStatus.checkInterval) {
+            clearInterval(serverStatus.checkInterval);
+          }
+        }
+      } else {
+        setServerStatus((prev) => ({
+          ...prev,
+          isServerAvailable: false,
+        }));
+      }
+    } catch (error) {
+      setServerStatus((prev) => ({
+        ...prev,
+        isServerAvailable: false,
+      }));
+    }
+  };
+
+  // Countdown timer effect
+  useEffect(() => {
+    // Initial server check
+    checkServerStatus();
+
+    // If server is not available, start countdown and periodic checks
+    if (!serverStatus.isServerAvailable) {
+      const interval = setInterval(() => {
+        setServerStatus((prev) => {
+          // Reduce countdown
+          const newCountdown = prev.countdownTime - 1;
+
+          // If countdown reaches 0, reset
+          if (newCountdown <= 0) {
+            return {
+              ...prev,
+              countdownTime: 180,
+            };
+          }
+
+          return {
+            ...prev,
+            countdownTime: newCountdown,
+          };
+        });
+
+        // Periodically check server status
+        checkServerStatus();
+      }, 1000);
+
+      // Save interval to state so we can clear it later
+      setServerStatus((prev) => ({
+        ...prev,
+        checkInterval: interval,
+      }));
+
+      // Cleanup
+      return () => clearInterval(interval);
+    }
+  }, [serverStatus.isServerAvailable]);
+
+  // Format countdown time
+  const formatCountdown = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+  };
+
 
   // Reverse geocode lat/lng to location string and pincode
   // Using OpenStreetMap Nominatim API for free geocoding
@@ -261,12 +370,12 @@ const locationFields = ["address", "pincode", "district", "city"]
     try {
       const res = await fetch(
         `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`
-      )
-      if (!res.ok) return null
-      const data = await res.json()
-      const address = data.address
+      );
+      if (!res.ok) return null;
+      const data = await res.json();
+      const address = data.address;
       // Extract pincode (postal code)
-      const pincode = address.postcode || ""
+      const pincode = address.postcode || "";
       // Extract a reasonable location label (city, town, village, district, state fallback)
       const locationLabel =
         address.city ||
@@ -275,177 +384,201 @@ const locationFields = ["address", "pincode", "district", "city"]
         address.county ||
         address.district ||
         address.state ||
-        ""
-      return { pincode, locationLabel }
+        "";
+      return { pincode, locationLabel };
     } catch {
-      return null
+      return null;
     }
-  }
+  };
 
   // On mount, get user location and reverse geocode it for pincode
-useEffect(() => {
-  if (!location) {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords
-          const result = await reverseGeocode(latitude, longitude)
-          if (result) {
-            const locValue = result.pincode || result.locationLabel || ""
-            if (locValue) {
-              dispatch({ type: "SET_LOCATION", payload: locValue })
+  useEffect(() => {
+    if (!location) {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords;
+            const result = await reverseGeocode(latitude, longitude);
+            if (result) {
+              const locValue = result.pincode || result.locationLabel || "";
+              if (locValue) {
+                dispatch({ type: "SET_LOCATION", payload: locValue });
+              }
             }
-          }
-        },
-        (error) => {
-          console.warn("Geolocation error:", error.message)
-        },
-        { timeout: 10000 }
-      )
+          },
+          (error) => {
+            console.warn("Geolocation error:", error.message);
+          },
+          { timeout: 10000 }
+        );
+      }
     }
-  }
-}, [dispatch]) // Only run once on mount
+  }, [dispatch]); // Only run once on mount
 
   // rest of your existing code unchanged...
 
   // Helper: fetch and merge suggestions for multiple fields
   const fetchSuggestions = async (fields, value) => {
-    const promises = fields.map(field =>
-      fetch(`https://pincodeads.onrender.com/api/v1.0/services/autocomplete/${field}?query=${encodeURIComponent(value)}`)
-        .then(res => (res.ok ? res.json() : []))
+    const promises = fields.map((field) =>
+      fetch(
+        `https://pincodeads.onrender.com/api/v1.0/services/autocomplete/${field}?query=${encodeURIComponent(
+          value
+        )}`
+      )
+        .then((res) => (res.ok ? res.json() : []))
         .catch(() => [])
-    )
-    const results = await Promise.all(promises)
-    return [...new Set(results.flat().filter(Boolean))]
-  }
+    );
+    const results = await Promise.all(promises);
+    return [...new Set(results.flat().filter(Boolean))];
+  };
 
   const handleServiceChange = async (e) => {
-    
-    const value = e.target.value
-    dispatch({ type: "SET_SEARCH_QUERY", payload: value })
+    const value = e.target.value;
+    dispatch({ type: "SET_SEARCH_QUERY", payload: value });
 
     if (value.length > 1) {
-      const fields = ["title", "businessName", "categoryName", "subcategoryName", "keyword"]
-      const suggestions = await fetchSuggestions(fields, value)
-      setServiceSuggestions(suggestions)
-      setShowServiceSuggestions(true)
+      const fields = [
+        "title",
+        "businessName",
+        "categoryName",
+        "subcategoryName",
+        "keyword",
+      ];
+      const suggestions = await fetchSuggestions(fields, value);
+      setServiceSuggestions(suggestions);
+      setShowServiceSuggestions(true);
     } else {
-      setServiceSuggestions([])
-      setShowServiceSuggestions(false)
+      setServiceSuggestions([]);
+      setShowServiceSuggestions(false);
     }
-  }
+  };
 
   const handleServiceSuggestionClick = (suggestion) => {
-    dispatch({ type: "SET_SEARCH_QUERY", payload: suggestion })
-    setShowServiceSuggestions(false)
-    serviceInputRef.current.blur()
-  }
+    dispatch({ type: "SET_SEARCH_QUERY", payload: suggestion });
+    setShowServiceSuggestions(false);
+    serviceInputRef.current.blur();
+  };
 
   const handleLocationChange = async (e) => {
-    const value = e.target.value
-    dispatch({ type: "SET_LOCATION", payload: value })
+    const value = e.target.value;
+    dispatch({ type: "SET_LOCATION", payload: value });
 
     if (value.length > 1) {
-      const fields = ["address", "pincode", "district", "city"]
-      const suggestions = await fetchSuggestions(fields, value)
-      setLocationSuggestions(suggestions)
-      setShowLocationSuggestions(true)
+      const fields = ["address", "pincode", "district", "city"];
+      const suggestions = await fetchSuggestions(fields, value);
+      setLocationSuggestions(suggestions);
+      setShowLocationSuggestions(true);
     } else {
-      setLocationSuggestions([])
-      setShowLocationSuggestions(false)
+      setLocationSuggestions([]);
+      setShowLocationSuggestions(false);
     }
-  }
+  };
 
   const handleLocationSuggestionClick = (suggestion) => {
-    dispatch({ type: "SET_LOCATION", payload: suggestion })
-    setShowLocationSuggestions(false)
-    locationInputRef.current.blur()
-  }
+    dispatch({ type: "SET_LOCATION", payload: suggestion });
+    setShowLocationSuggestions(false);
+    locationInputRef.current.blur();
+  };
 
-const handleSearch = async (e) => {
-  if (e) e.preventDefault();
+  const handleSearch = async (e) => {
+    if (e) e.preventDefault();
 
-  const params = new URLSearchParams();
-  if (searchQuery?.trim()) params.append("q", searchQuery.trim());
+    const params = new URLSearchParams();
+    if (searchQuery?.trim()) params.append("q", searchQuery.trim());
 
-  if (location?.trim()) {
-    // Check if location is a 6-digit pincode
-    const pincodeRegex = /^\d{6}$/;
-    if (pincodeRegex.test(location.trim())) {
-      params.append("pincode", location.trim());
-    } else {
-      // Otherwise, send as address, district, and city
-// Only add as city
-      params.append("city", location.trim());
+    if (location?.trim()) {
+      // Check if location is a 6-digit pincode
+      const pincodeRegex = /^\d{6}$/;
+      if (pincodeRegex.test(location.trim())) {
+        params.append("pincode", location.trim());
+      } else {
+        // Otherwise, send as address, district, and city
+        // Only add as city
+        params.append("city", location.trim());
+      }
     }
-  }
 
-  try {
-    const res = await fetch(`https://pincodeads.onrender.com/api/v1.0/services/search?${params.toString()}`);
-    const data = res.ok ? await res.json() : [];
-    navigate(`/search?${params.toString()}`, { state: { results: data } });
-  } catch {
-    navigate(`/search?${params.toString()}`, { state: { results: [] } });
-  }
-};
+    try {
+      const res = await fetch(
+        `https://pincodeads.onrender.com/api/v1.0/services/search?${params.toString()}`
+      );
+      const data = res.ok ? await res.json() : [];
+      navigate(`/search?${params.toString()}`, { state: { results: data } });
+    } catch {
+      navigate(`/search?${params.toString()}`, { state: { results: [] } });
+    }
+  };
 
-// const handleSearch = async (e) => {
-//   if (e) e.preventDefault()
+  // const handleSearch = async (e) => {
+  //   if (e) e.preventDefault()
 
-//   // Collect values for all fields from state or form (adjust as needed)
-//   const fieldValues = {
-//     title: state.searchQuery?.trim(),
-//     businessName: state.searchQuery?.trim(),
-//     categoryName: state.searchQuery?.trim(),
-//     subcategoryName: state.searchQuery?.trim(),
-//     keyword: state.searchQuery?.trim(),
-//     address: state.location?.trim(),
-//     pincode: state.location?.trim(),
-//     district: state.location?.trim(),
-//     city: state.location?.trim(),
-//   }
+  //   // Collect values for all fields from state or form (adjust as needed)
+  //   const fieldValues = {
+  //     title: state.searchQuery?.trim(),
+  //     businessName: state.searchQuery?.trim(),
+  //     categoryName: state.searchQuery?.trim(),
+  //     subcategoryName: state.searchQuery?.trim(),
+  //     keyword: state.searchQuery?.trim(),
+  //     address: state.location?.trim(),
+  //     pincode: state.location?.trim(),
+  //     district: state.location?.trim(),
+  //     city: state.location?.trim(),
+  //   }
 
-//   // Only include non-empty fields in the search
-//   const params = new URLSearchParams()
-//   Object.entries(fieldValues).forEach(([key, value]) => {
-//     if (value) params.append(key, value)
-//   })
+  //   // Only include non-empty fields in the search
+  //   const params = new URLSearchParams()
+  //   Object.entries(fieldValues).forEach(([key, value]) => {
+  //     if (value) params.append(key, value)
+  //   })
 
-//   try {
-//     // Fetch results for each field, then merge and deduplicate
-//     const allFields = [...serviceFields, ...locationFields]
-//     const fetches = allFields
-//       .filter(field => fieldValues[field])
-//       .map(field =>
-//         fetch(`https://pincodeads.onrender.com/api/v1.0/services/search?${field}=${encodeURIComponent(fieldValues[field])}`)
-//           .then(res => (res.ok ? res.json() : []))
-//           .catch(() => [])
-//       )
-//     const resultsArrays = await Promise.all(fetches)
-//     // Flatten and deduplicate by id
-//     const allResults = resultsArrays.flat()
-//     const uniqueResults = Array.from(
-//       new Map(allResults.map(item => [item.id, item])).values()
-//     )
-//     navigate(`/search?${params.toString()}`, { state: { results: uniqueResults } })
-//   } catch {
-//     navigate(`/search?${params.toString()}`, { state: { results: [] } })
-//   }
-// }
+  //   try {
+  //     // Fetch results for each field, then merge and deduplicate
+  //     const allFields = [...serviceFields, ...locationFields]
+  //     const fetches = allFields
+  //       .filter(field => fieldValues[field])
+  //       .map(field =>
+  //         fetch(`https://pincodeads.onrender.com/api/v1.0/services/search?${field}=${encodeURIComponent(fieldValues[field])}`)
+  //           .then(res => (res.ok ? res.json() : []))
+  //           .catch(() => [])
+  //       )
+  //     const resultsArrays = await Promise.all(fetches)
+  //     // Flatten and deduplicate by id
+  //     const allResults = resultsArrays.flat()
+  //     const uniqueResults = Array.from(
+  //       new Map(allResults.map(item => [item.id, item])).values()
+  //     )
+  //     navigate(`/search?${params.toString()}`, { state: { results: uniqueResults } })
+  //   } catch {
+  //     navigate(`/search?${params.toString()}`, { state: { results: [] } })
+  //   }
+  // }
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault()
-      handleSearch()
-      setShowServiceSuggestions(false)
-      setShowLocationSuggestions(false)
-      serviceInputRef.current.blur()
-      locationInputRef.current.blur()
+      e.preventDefault();
+      handleSearch();
+      setShowServiceSuggestions(false);
+      setShowLocationSuggestions(false);
+      serviceInputRef.current.blur();
+      locationInputRef.current.blur();
     }
-  }
+  };
 
   return (
     <section className="relative min-h-[90vh] bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 overflow-hidden p-8 text-center">
+
+      {/* Server Maintenance Disclaimer */}
+      {!serverStatus.isServerAvailable && (
+        <div className="fixed top-0 left-0 right-0 z-50 bg-yellow-500 text-white p-4 flex items-center justify-center">
+          <AlertTriangle className="mr-3 w-6 h-6" />
+          <span className="font-semibold mr-4">Server Under Maintenance</span>
+          <Clock className="mr-2 w-5 h-5" />
+          <span className="font-bold">
+            Estimated Restart: {formatCountdown(serverStatus.countdownTime)}
+          </span>
+        </div>
+      )}
+
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
@@ -457,7 +590,9 @@ const handleSearch = async (e) => {
         <div className="text-center max-w-4xl mx-auto">
           <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md rounded-full px-6 py-3 mb-6">
             <Sparkles className="w-5 h-5 text-yellow-300" />
-            <span className="text-white font-medium">Discover Amazing Local Businesses</span>
+            <span className="text-white font-medium">
+              Discover Amazing Local Businesses
+            </span>
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-4 leading-tight">
@@ -468,7 +603,8 @@ const handleSearch = async (e) => {
           </h1>
 
           <p className="text-xl md:text-2xl text-indigo-100 mb-12 leading-relaxed">
-            Connect with trusted local businesses, book services instantly, and discover hidden gems in your neighborhood
+            Connect with trusted local businesses, book services instantly, and
+            discover hidden gems in your neighborhood
           </p>
 
           <form onSubmit={handleSearch} className="mb-16">
@@ -482,7 +618,9 @@ const handleSearch = async (e) => {
                   placeholder="What service are you looking for?"
                   value={searchQuery}
                   onChange={handleServiceChange}
-                  onFocus={() => setShowServiceSuggestions(serviceSuggestions.length > 0)}
+                  onFocus={() =>
+                    setShowServiceSuggestions(serviceSuggestions.length > 0)
+                  }
                   onKeyDown={handleKeyDown}
                   className="w-full pl-12 pr-4 py-4 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-transparent text-lg"
                   autoComplete="off"
@@ -511,7 +649,9 @@ const handleSearch = async (e) => {
                   placeholder="Enter your location"
                   value={location}
                   onChange={handleLocationChange}
-                  onFocus={() => setShowLocationSuggestions(locationSuggestions.length > 0)}
+                  onFocus={() =>
+                    setShowLocationSuggestions(locationSuggestions.length > 0)
+                  }
                   onKeyDown={handleKeyDown}
                   className="w-full pl-12 pr-4 py-4 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-transparent text-lg"
                   autoComplete="off"
@@ -549,7 +689,9 @@ const handleSearch = async (e) => {
               { number: "100+", label: "Cities Covered" },
             ].map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-white mb-2">{stat.number}</div>
+                <div className="text-3xl md:text-4xl font-bold text-white mb-2">
+                  {stat.number}
+                </div>
                 <div className="text-indigo-200 font-medium">{stat.label}</div>
               </div>
             ))}
@@ -571,6 +713,5 @@ const handleSearch = async (e) => {
         </div>
       </div>
     </section>
-  )
+  );
 }
-

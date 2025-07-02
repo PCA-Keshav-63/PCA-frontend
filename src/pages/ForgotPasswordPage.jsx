@@ -227,7 +227,7 @@ const [loading, setLoading] = useState(false)
     setMessage(null)
 
     try {
-      const response = await fetch(`http://192.168.1.20:8080/api/v1.0/send-reset-otp?email=${encodeURIComponent(email)}`, {
+      const response = await fetch(`https://pincodeads.onrender.com/api/v1.0/send-reset-otp?email=${encodeURIComponent(email)}`, {
         method: "POST"
       })
 

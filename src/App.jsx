@@ -34,8 +34,6 @@
 
 // export default App
 
-
-
 // import { Routes, Route } from "react-router-dom"
 // import Layout from "./layouts/Layout.jsx"
 // import HomePage from "./pages/HomePage.jsx"
@@ -47,8 +45,6 @@
 // import CategoriesPage from "./pages/CategoriesPage.jsx"
 // import CategoryServicesPage from "./pages/CategoryServicePage.jsx"
 // import ShopOwnerRegistrationPage from "./pages/ShopOwnerRegistrationPage.jsx"
-
-
 
 // function App() {
 //   return (
@@ -70,7 +66,68 @@
 
 // export default App
 
+// import { Routes, Route, Navigate } from "react-router-dom";
+// import Layout from "./layouts/Layout.jsx";
+// import HomePage from "./pages/HomePage.jsx";
+// import SearchPage from "./pages/SearchPage.jsx";
+// import DashboardPage from "./pages/DashboardPage.jsx";
+// import LoginPage from "./pages/LoginPage.jsx";
+// import ProfilePage from "./pages/ProfilePage.jsx";
+// import AboutPage from "./pages/AboutPage.jsx";
+// import CategoriesPage from "./pages/CategoriesPage.jsx";
+// import CategoryServicesPage from "./pages/CategoryServicePage.jsx";
+// import ShopOwnerRegistrationPage from "./pages/ShopOwnerRegistrationPage.jsx";
+// import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx";
+// import UserProfilePage from "./pages/UserProfilePage.jsx";
+// import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
+// import { useAuthStore } from "./store/authStore";
+// import { useEffect } from "react";
+// // function PrivateRoute({ children }) {
+// //   const { isAuthenticated, isCheckingAuth } = useAuthStore();
 
+// //   if (isCheckingAuth) {
+// //     return <div>Loading...</div>; // Show loading indicator while auth state is checked
+// //   }
+
+// //   if (!isAuthenticated) {
+// //     return <Navigate to="/login" replace />;
+// //   }
+
+// //   return children;
+// // }
+
+// function App() {
+//   useEffect(() => {
+//     // Wake up Render backend
+//     fetch("https://pincodeads.onrender.com").catch(() => {}); // Ignore errors, just wake up the server
+//   }, []);
+//   return (
+//     <Layout>
+//       <Routes>
+//         <Route path="/" element={<HomePage />} />
+//         <Route path="/search" element={<SearchPage />} />
+//         <Route path="/dashboard" element={<DashboardPage />} />
+//         <Route path="/login" element={<LoginPage />} />
+//         <Route path="/profile" element={<ProfilePage />} />
+//         <Route path="/about" element={<AboutPage />} />
+//         <Route path="/user-profile" element={<UserProfilePage />} />
+//         <Route path="/categories" element={<CategoriesPage />} />
+//         <Route
+//           path="/categories/:categoryId"
+//           element={<CategoryServicesPage />}
+//         />
+//         <Route
+//           path="/shopowner-registration"
+//           element={<ShopOwnerRegistrationPage />}
+//         />
+//         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+//         <Route path="/reset-password" element={<ResetPasswordPage />} />
+//       </Routes>
+//     </Layout>
+//   );
+// }
+
+// export default App;
 
 
 
@@ -88,61 +145,35 @@ import CategoriesPage from "./pages/CategoriesPage.jsx";
 import CategoryServicesPage from "./pages/CategoryServicePage.jsx";
 import ShopOwnerRegistrationPage from "./pages/ShopOwnerRegistrationPage.jsx";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx";
+import UserProfilePage from "./pages/UserProfilePage.jsx";
 import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
-import { useAuthStore } from "./store/authStore";
-import { useEffect } from "react"
-// function PrivateRoute({ children }) {
-//   const { isAuthenticated, isCheckingAuth } = useAuthStore();
-
-//   if (isCheckingAuth) {
-//     return <div>Loading...</div>; // Show loading indicator while auth state is checked
-//   }
-
-//   if (!isAuthenticated) {
-//     return <Navigate to="/login" replace />;
-//   }
-
-//   return children;
-// }
+import NotFoundPage from "./pages/404Page.jsx"; // <-- Import your 404 page
+import { useEffect } from "react";
 
 function App() {
-    useEffect(() => {
+  useEffect(() => {
     // Wake up Render backend
-    fetch("https://pincodeads.onrender.com")
-      .catch(() => {}) // Ignore errors, just wake up the server
-  }, [])
+    fetch("https://pincodeads.onrender.com").catch(() => {});
+  }, []);
   return (
     <Layout>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/search" element={<SearchPage />} />
-        <Route
-          path="/dashboard"
-          element={
-            
-              <DashboardPage />
-            
-          }
-        />
+        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route
-          path="/profile"
-          element={
-            
-              <ProfilePage />
-            
-          }
-        />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/user-profile" element={<UserProfilePage />} />
         <Route path="/categories" element={<CategoriesPage />} />
         <Route path="/categories/:categoryId" element={<CategoryServicesPage />} />
         <Route path="/shopowner-registration" element={<ShopOwnerRegistrationPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="*" element={<NotFoundPage />} /> {/* <-- Catch-all 404 route */}
       </Routes>
     </Layout>
   );
 }
 
 export default App;
-
