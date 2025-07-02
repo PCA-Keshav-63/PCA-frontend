@@ -247,9 +247,10 @@ export default function HeroSection() {
 
   const [serverStatus, setServerStatus] = useState({
     isServerAvailable: true,
+    isWakingUp: false,
     countdownTime: 180, // 3 minutes in seconds
-    checkInterval: null,
   });
+  const intervalRef = useRef(null);
 
   // Suggestions for service fields
   const [serviceSuggestions, setServiceSuggestions] = useState([]);
@@ -262,99 +263,88 @@ export default function HeroSection() {
   const serviceInputRef = useRef(null);
   const locationInputRef = useRef(null);
 
+  // Helper: fetch and merge suggestions for multiple fields
+  const fetchWithTimeout = (url, options = {}, timeout = 10000) => {
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error("timeout")), timeout);
+      fetch(url, options)
+        .then((res) => {
+          clearTimeout(timer);
+          resolve(res);
+        })
+        .catch((err) => {
+          clearTimeout(timer);
+          reject(err);
+        });
+    });
+  };
 
-// Function to check server status
-    const checkServerStatus = async () => {
+  // Function to check server status
+  const checkServerStatus = async () => {
+    setServerStatus((prev) => ({ ...prev, isWakingUp: false }));
     try {
-      const response = await fetch("https://pincodeads.onrender.com", {
-        method: "GET",
-        headers: {
-          "Cache-Control": "no-cache",
-        },
-      });
-
+      const response = await fetchWithTimeout(
+        "https://pincodeads.onrender.com/health",
+        { method: "GET", headers: { "Cache-Control": "no-cache" } },
+        5000 // 10 seconds timeout
+      );
+      console.log("Server status check response:", response);
       if (response.ok) {
         // Server is back
-        if (!serverStatus.isServerAvailable) {
-          setServerStatus((prev) => ({
-            ...prev,
-            isServerAvailable: true,
-            countdownTime: 180,
-          }));
-
-          // Show toast notification
-          toast.success("We are back!", {
-            duration: 5000,
-            position: "top-center",
-            style: {
-              background: "#4CAF50",
-              color: "white",
-              fontWeight: "bold",
-              padding: "16px",
-              borderRadius: "10px",
-            },
-            icon: "🎉",
-          });
-
-          // Clear interval if it exists
-          if (serverStatus.checkInterval) {
-            clearInterval(serverStatus.checkInterval);
-          }
+        setServerStatus((prev) => ({
+          ...prev,
+          isServerAvailable: true,
+          isWakingUp: false,
+          countdownTime: 180,
+        }));
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
         }
+        toast.success("We are back!", { icon: "🎉" });
       } else {
         setServerStatus((prev) => ({
           ...prev,
           isServerAvailable: false,
+          isWakingUp: false,
         }));
       }
     } catch (error) {
+      // If timeout, show waking up
       setServerStatus((prev) => ({
         ...prev,
         isServerAvailable: false,
+        isWakingUp: error.message === "timeout",
       }));
     }
   };
 
   // Countdown timer effect
+  // Effect to check server status and handle countdown
   useEffect(() => {
-    // Initial server check
     checkServerStatus();
 
-    // If server is not available, start countdown and periodic checks
-    if (!serverStatus.isServerAvailable) {
-      const interval = setInterval(() => {
+    if (!serverStatus.isServerAvailable && !intervalRef.current) {
+      intervalRef.current = setInterval(() => {
         setServerStatus((prev) => {
-          // Reduce countdown
           const newCountdown = prev.countdownTime - 1;
-
-          // If countdown reaches 0, reset
           if (newCountdown <= 0) {
-            return {
-              ...prev,
-              countdownTime: 180,
-            };
+            checkServerStatus();
+            return { ...prev, countdownTime: 180 };
           }
-
-          return {
-            ...prev,
-            countdownTime: newCountdown,
-          };
+          return { ...prev, countdownTime: newCountdown };
         });
-
-        // Periodically check server status
-        checkServerStatus();
       }, 1000);
-
-      // Save interval to state so we can clear it later
-      setServerStatus((prev) => ({
-        ...prev,
-        checkInterval: interval,
-      }));
-
-      // Cleanup
-      return () => clearInterval(interval);
     }
-  }, [serverStatus.isServerAvailable]);
+
+    // Cleanup interval on unmount or when server is back
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, []);
 
   // Format countdown time
   const formatCountdown = (seconds) => {
@@ -362,7 +352,6 @@ export default function HeroSection() {
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
   };
-
 
   // Reverse geocode lat/lng to location string and pincode
   // Using OpenStreetMap Nominatim API for free geocoding
@@ -566,12 +555,13 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-[90vh] bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 overflow-hidden p-8 text-center">
-
       {/* Server Maintenance Disclaimer */}
       {!serverStatus.isServerAvailable && (
         <div className="fixed top-0 left-0 right-0 z-50 bg-yellow-500 text-white p-4 flex items-center justify-center">
           <AlertTriangle className="mr-3 w-6 h-6" />
-          <span className="font-semibold mr-4">Server Under Maintenance</span>
+          <span className="font-semibold mr-4">{serverStatus.isWakingUp
+              ? "Server Under Maintenance, Please Wait..."
+              : "Server Under Maintenance"}</span>
           <Clock className="mr-2 w-5 h-5" />
           <span className="font-bold">
             Estimated Restart: {formatCountdown(serverStatus.countdownTime)}
@@ -596,9 +586,9 @@ export default function HeroSection() {
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-4 leading-tight">
-            Find Your Perfect{" "}
+            Sabka Pincode <br />
             <span className="bg-gradient-to-r from-yellow-300 to-pink-300 bg-clip-text text-transparent">
-              Local Experience
+              Sabka Ad Zone
             </span>
           </h1>
 
