@@ -221,7 +221,7 @@ function Header() {
           {/* bg-gradient-to-r from-indigo-600 to-purple-600 */}
             <div className="w-25 h-16  rounded-xl flex items-center justify-center">
               {/* <span className="text-white font-bold text-xl">P</span> */}
-                    <img src="../../public/uppar.jpg" alt="PincodeAds Logo" style={{ width: "100%", height: "100%", objectFit: "cover" }}/>
+                    <img src="../../uppar.jpg" alt="PincodeAds Logo" style={{ width: "100%", height: "100%", objectFit: "cover" }}/>
             </div>
             <div className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
             </div>
