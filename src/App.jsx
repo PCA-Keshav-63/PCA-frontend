@@ -129,11 +129,9 @@
 
 // export default App;
 
-
-
-
-
 import { Routes, Route, Navigate } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react"; // <-- Add this import
 import Layout from "./layouts/Layout.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import SearchPage from "./pages/SearchPage.jsx";
@@ -166,12 +164,21 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/user-profile" element={<UserProfilePage />} />
         <Route path="/categories" element={<CategoriesPage />} />
-        <Route path="/categories/:categoryId" element={<CategoryServicesPage />} />
-        <Route path="/shopowner-registration" element={<ShopOwnerRegistrationPage />} />
+        <Route
+          path="/categories/:categoryId"
+          element={<CategoryServicesPage />}
+        />
+        <Route
+          path="/shopowner-registration"
+          element={<ShopOwnerRegistrationPage />}
+        />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="*" element={<NotFoundPage />} /> {/* <-- Catch-all 404 route */}
+        <Route path="*" element={<NotFoundPage />} />{" "}
+        {/* <-- Catch-all 404 route */}
       </Routes>
+      <Analytics />
+      <SpeedInsights />
     </Layout>
   );
 }
