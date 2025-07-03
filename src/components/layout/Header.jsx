@@ -324,13 +324,13 @@ function Header() {
             <div className="pt-4 border-t border-gray-100">
               {isAuthenticated ? (
                 <div className="space-y-3">
-                  <Link
-                    to="/dashboard"
-                    className="block px-3 py-2 text-gray-700 hover:text-indigo-600 font-medium"
-                    onClick={toggleMenu}
-                  >
-                    Dashboard
-                  </Link>
+                    <Link
+                      to="/user-profile"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                      onClick={() => setIsProfileDropdownOpen(false)}
+                    >
+                      My Profile
+                    </Link>
                   <button
                     onClick={() => {
                       handleLogout()

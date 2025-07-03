@@ -231,27 +231,14 @@ function Footer() {
               </div>
             </div>
 
-            {/* Newsletter */}
-            <div className="mt-6">
-              <h4 className="font-semibold mb-3 text-white">Stay Updated</h4>
-              <div className="flex">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 px-4 py-2 bg-gray-800 border border-gray-700 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white"
-                />
-                <button className="bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-2 rounded-r-lg hover:shadow-lg transition-all duration-200">
-                  Subscribe
-                </button>
-              </div>
-            </div>
+
           </div>
         </div>
 
         {/* Bottom */}
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm">&copy; 2024  PincodeAds. All rights reserved.</p>
+            <p className="text-gray-400 text-sm">&copy; 2025  PincodeAds. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <Link to="/privacy" className="text-gray-400 hover:text-white text-sm transition-colors">
                 Privacy Policy
