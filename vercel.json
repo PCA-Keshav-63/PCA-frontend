@@ -1,17 +1,17 @@
 {
   "routes": [
-    { "src": "^/$", "dest": "/index.html" },
-    { "src": "^/search$", "dest": "/index.html" },
-    { "src": "^/dashboard$", "dest": "/index.html" },
-    { "src": "^/login$", "dest": "/index.html" },
-    { "src": "^/profile$", "dest": "/index.html" },
-    { "src": "^/about$", "dest": "/index.html" },
-    { "src": "^/user-profile$", "dest": "/index.html" },
-    { "src": "^/categories$", "dest": "/index.html" },
-    { "src": "^/categories/.*$", "dest": "/index.html" },
-    { "src": "^/shopowner-registration$", "dest": "/index.html" },
-    { "src": "^/forgot-password$", "dest": "/index.html" },
-    { "src": "^/reset-password$", "dest": "/index.html" },
-    { "src": "/.*", "dest": "/index.html" }
+    { "src": "^/$", "dest": "/" },
+    { "src": "^/search$", "dest": "/" },
+    { "src": "^/dashboard$", "dest": "/" },
+    { "src": "^/login$", "dest": "/" },
+    { "src": "^/profile$", "dest": "/" },
+    { "src": "^/about$", "dest": "/" },
+    { "src": "^/user-profile$", "dest": "/" },
+    { "src": "^/categories$", "dest": "/" },
+    { "src": "^/categories/.*$", "dest": "/" },
+    { "src": "^/shopowner-registration$", "dest": "/" },
+    { "src": "^/forgot-password$", "dest": "/" },
+    { "src": "^/reset-password$", "dest": "/" },
+    { "src": "/.*", "dest": "/" }
   ]
 }
