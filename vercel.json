@@ -1,17 +1,5 @@
 {
   "routes": [
-    { "src": "^/$", "dest": "/" },
-    { "src": "^/search$", "dest": "/" },
-    { "src": "^/dashboard$", "dest": "/" },
-    { "src": "^/login$", "dest": "/" },
-    { "src": "^/profile$", "dest": "/" },
-    { "src": "^/about$", "dest": "/" },
-    { "src": "^/user-profile$", "dest": "/" },
-    { "src": "^/categories$", "dest": "/" },
-    { "src": "^/categories/.*$", "dest": "/" },
-    { "src": "^/shopowner-registration$", "dest": "/" },
-    { "src": "^/forgot-password$", "dest": "/" },
-    { "src": "^/reset-password$", "dest": "/" },
-    { "src": "/.*", "dest": "/" }
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
