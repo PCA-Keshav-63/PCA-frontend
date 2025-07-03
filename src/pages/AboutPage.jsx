@@ -306,13 +306,8 @@
 "use client";
 
 import React, { useMemo } from "react";
-import {
-  Heart,
-  Target,
-  Shield,
-  CheckCircle,
-  ArrowRight,
-} from "lucide-react";
+import { Linkedin } from "lucide-react";
+import { Heart, Target, Shield, CheckCircle, ArrowRight } from "lucide-react";
 import {
   PieChart,
   Pie,
@@ -331,6 +326,7 @@ function AboutPage() {
       bio: "Drivyaansh is a curious and committed Computer Engineering student with a keen interest in software development and system design.",
       color: "from-purple-500 to-violet-500",
       img: "../Drivyaansh.png",
+      linkedin: "https://www.linkedin.com/in/drivyaansh-yadav-85a070296",
     },
     {
       name: "Keshav Suthar",
@@ -338,6 +334,7 @@ function AboutPage() {
       bio: "Keshav is a Computer Engineering intern with practical experience in MERN stack and Spring Boot, focused on building clean and efficient web applications.",
       color: "from-purple-500 to-violet-500",
       img: "../Keshav.png",
+      linkedin: "https://www.linkedin.com/in/keshav-suthar",
     },
     {
       name: "Shreeyansh Singh",
@@ -345,6 +342,7 @@ function AboutPage() {
       bio: "Shreeyansh is a Computer Engineering student with strong expertise in frontend development and a growing passion for full-stack engineering.",
       color: "from-purple-500 to-violet-500",
       img: "../Shreeyansh.png",
+      linkedin: "https://www.linkedin.com/in/shreeyansh-singh-858ab633b",
     },
     {
       name: "Keith Fernandes",
@@ -352,6 +350,7 @@ function AboutPage() {
       bio: "Keith is an Electronics and Telecommunications Engineering student passionate about data science, machine learning, and AI.",
       color: "from-purple-500 to-violet-500",
       img: "../Keith.png",
+      linkedin: "https://www.linkedin.com/in/keith-fernandes-4b8777230",
     },
     {
       name: "Saumya Shah",
@@ -359,6 +358,7 @@ function AboutPage() {
       bio: "Saumya is a focused and passionate Computer Engineering student with a strong interest in full-stack development.",
       color: "from-green-500 to-teal-500",
       img: "../Saumya.png",
+      linkedin: "https://www.linkedin.com/in/saumya-shah-075201277",
     },
     {
       name: "Shubham Pashte",
@@ -366,6 +366,7 @@ function AboutPage() {
       bio: "Shubham is a dedicated Electronics Engineering student with a strong passion for web development and software systems.",
       color: "from-purple-500 to-violet-500",
       img: "../Shubham.png",
+      linkedin: "http://www.linkedin.com/in/ShubhamPashte",
     },
     {
       name: "Lubdhie Dagade",
@@ -373,6 +374,7 @@ function AboutPage() {
       bio: "Lubdhie is a passionate Computer Engineering intern with a strong interest in frontend development and UI/UX design.",
       color: "from-purple-500 to-violet-500",
       img: "../Lubdhie.png",
+      linkedin: "https://www.linkedin.com/in/lubdhie-dagade-59ba47343",
     },
     {
       name: "Kruti Dagade",
@@ -380,6 +382,7 @@ function AboutPage() {
       bio: "Kruti is a Computer Engineering intern who thrives on designing smooth, user-centric web experiences with a keen interest in frontend development.",
       color: "from-purple-500 to-violet-500",
       img: "../Kruti.png",
+      linkedin: "https://www.linkedin.com/in/kruti-dagade-416328333",
     },
     {
       name: "Tanhaa Mehta",
@@ -387,6 +390,7 @@ function AboutPage() {
       bio: "Tanhaa is a Computer Engineering student and intern with a strong passion for web development, AI-driven solutions, and software engineering.",
       color: "from-purple-500 to-violet-500",
       img: "../Tanhaa.png",
+      linkedin: "https://www.linkedin.com/in/tanhaa-mehta-582727273",
     },
   ];
 
@@ -439,28 +443,34 @@ function AboutPage() {
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 leading-relaxed mb-8 max-w-3xl mx-auto">
             At PincodeAds, we’re building a digital bridge between local
-            businesses and their nearby customers, making discovery, trust,
-            and transactions faster, smarter, and more personal.
+            businesses and their nearby customers, making discovery, trust, and
+            transactions faster, smarter, and more personal.
           </p>
           <div className="flex flex-wrap items-center justify-center space-x-6 space-y-4 sm:space-y-0 bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-gray-100 text-gray-700 font-medium text-center">
             <div className="w-24">
-              <div className="text-2xl sm:text-3xl font-extrabold text-indigo-600">2020</div>
+              <div className="text-2xl sm:text-3xl font-extrabold text-indigo-600">
+                2020
+              </div>
               <div className="text-xs sm:text-sm font-semibold">Founded</div>
             </div>
             <div className="hidden sm:block w-px h-12 bg-gray-300"></div>
             <div className="w-24">
-              <div className="text-2xl sm:text-3xl font-extrabold text-purple-600">50K+</div>
+              <div className="text-2xl sm:text-3xl font-extrabold text-purple-600">
+                50K+
+              </div>
               <div className="text-xs sm:text-sm font-semibold">Businesses</div>
             </div>
             <div className="hidden sm:block w-px h-12 bg-gray-300"></div>
             <div className="w-24">
-              <div className="text-2xl sm:text-3xl font-extrabold text-green-600">500+</div>
+              <div className="text-2xl sm:text-3xl font-extrabold text-green-600">
+                500+
+              </div>
               <div className="text-xs sm:text-sm font-semibold">Cities</div>
             </div>
           </div>
         </div>
       </section>
-      
+
       {/* Founders Section */}
       <section
         className="bg-white  shadow-sm p-8 sm:p-12 border border-gray-100"
@@ -470,9 +480,7 @@ function AboutPage() {
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
             Founding Team
           </h2>
-          <p className="text-lg text-gray-600">
-            Visionaries behind PincodeAds
-          </p>
+          <p className="text-lg text-gray-600">Visionaries behind PincodeAds</p>
         </div>
         <div className="flex flex-col md:flex-row items-center justify-center gap-10 px-4 max-w-5xl mx-auto flex-wrap">
           {[
@@ -481,27 +489,40 @@ function AboutPage() {
               role: "CO-FOUNDER & COO",
               bio: "Electronics Engineer with 25+ years of IT experience and certifications from IBM, Linux, and Sun. A serial entrepreneur, he leads technical operations and oversees HR and finance. He has worked successfully in Hong Kong and Japan. In his free time, he enjoys reading with tea.",
               img: "../Shital Sir.png",
+              linkedin:
+                "https://in.linkedin.com/in/shitalkumar-dagade-4b0bba21",
             },
             {
               name: "ChanchalKumar Dagade",
               role: "CO-FOUNDER & CEO",
               bio: "Electronics Engineer with a Master’s in Information Management and 22+ years of IT experience. He brings expertise in marketing, quality control, finance, and public relations driving business growth with strategic insight. He enjoys playing chess in his free time.",
               img: "../Chanchal Sir.png",
+              linkedin: "https://in.linkedin.com/in/chanchaldagade",
             },
           ].map((founder, i) => (
-            <article
-              key={i}
-              className="text-center group max-w-xs sm:max-w-sm"
-            >
+            <article key={i} className="text-center group max-w-xs sm:max-w-sm">
               <img
                 src={founder.img}
                 alt={founder.name}
                 className="w-32 h-32 mx-auto mb-4 rounded-full border-4 border-white shadow-md group-hover:scale-105 transition-transform duration-300 object-cover"
                 loading="lazy"
               />
-              <h3 className="text-xl font-bold text-gray-900 mb-1">{founder.name}</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-1 flex items-center justify-center gap-2 whitespace-nowrap">
+                <a
+                  href={founder.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-700 hover:text-blue-900 flex-shrink-0 mb-1.5"
+                  aria-label={`LinkedIn profile of ${founder.name}`}
+                >
+                  <Linkedin className="w-6 h-6" />
+                </a>
+                <span>{founder.name}</span>
+              </h3>
               <p className="text-indigo-600 font-medium mb-2">{founder.role}</p>
-              <p className="text-gray-600 text-sm leading-relaxed">{founder.bio}</p>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                {founder.bio}
+              </p>
             </article>
           ))}
         </div>
@@ -513,7 +534,9 @@ function AboutPage() {
         aria-label="Team members"
       >
         <div className="text-center mb-12 px-4 max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Amazing Team</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            Our Amazing Team
+          </h2>
           <p className="text-xl text-gray-600">
             The backbone behind PincodeAds' execution
           </p>
@@ -533,11 +556,24 @@ function AboutPage() {
                   className="w-32 h-32 mx-auto mb-4 rounded-full border-4 border-white shadow-md group-hover:scale-105 transition-transform duration-300 object-cover"
                   loading="lazy"
                 />
-                <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-1 flex items-center justify-center gap-2 whitespace-nowrap">
+                <a
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-700 hover:text-blue-900 flex-shrink-0 mb-1.5"
+                  aria-label={`LinkedIn profile of ${member.name}`}
+                >
+                  <Linkedin className="w-6 h-6" />
+                </a>
+                <span>{member.name}</span>
+              </h3>
                 <p className="text-indigo-600 font-medium mb-2">
                   {member.role || "Team Member"}
                 </p>
-                <p className="text-gray-600 text-sm leading-relaxed">{member.bio}</p>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  {member.bio}
+                </p>
               </article>
             ))}
         </div>
@@ -582,10 +618,7 @@ function AboutPage() {
       </section>
 
       {/* What Powers PincodeAds */}
-      <section
-        className="py-16 bg-gray-50"
-        aria-label="Platform principles"
-      >
+      <section className="py-16 bg-gray-50" aria-label="Platform principles">
         <div className="text-center mb-14 px-4 max-w-4xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
             What Powers PincodeAds
@@ -629,8 +662,12 @@ function AboutPage() {
                 <Icon className="w-7 h-7 text-white" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">{title}</h3>
-                <p className="text-gray-600 whitespace-pre-line leading-relaxed">{desc}</p>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                  {title}
+                </h3>
+                <p className="text-gray-600 whitespace-pre-line leading-relaxed">
+                  {desc}
+                </p>
               </div>
             </article>
           ))}
