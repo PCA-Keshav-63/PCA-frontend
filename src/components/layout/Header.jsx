@@ -196,7 +196,7 @@ function Header() {
     dispatch({ type: "TOGGLE_MENU" })
   }
 
-    useEffect(() => {
+  useEffect(() => {
     checkAuth()
   }, [checkAuth])
 
@@ -218,14 +218,20 @@ function Header() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-          {/* bg-gradient-to-r from-indigo-600 to-purple-600 */}
+            {/* bg-gradient-to-r from-indigo-600 to-purple-600 */}
             <div className="w-25 h-16  rounded-xl flex items-center justify-center">
-              {/* <span className="text-white font-bold text-xl">P</span> */}
+              <span className="text-white font-bold text-xl">P</span>
                     <img src="../../uppar.jpg" alt="PincodeAds Logo" style={{ width: "100%", height: "100%", objectFit: "cover" }}/>
             </div>
             <div className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
             </div>
-     
+            {/* <div className="w-10 h-10 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center">
+              <span className="text-white font-bold text-xl">P</span>
+            </div>
+            <div className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              PincodeAds
+            </div> */}
+
 
           </Link>
 
@@ -290,11 +296,73 @@ function Header() {
               </div>
             )}
           </div>
-
+          {/* Mobile menu button */}
+          <button
+            onClick={toggleMenu}
+            className="md:hidden p-2 rounded-lg text-gray-700 hover:text-indigo-600 hover:bg-gray-50 transition-colors"
+          >
+            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
           {/* Rest of the mobile menu code remains the same */}
           {/* ... */}
         </div>
       </div>
+      {/* Mobile Navigation */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-white border-t border-gray-100 shadow-lg">
+          <div className="px-4 py-6 space-y-4">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.path}
+                className="block px-3 py-2 text-gray-700 hover:text-indigo-600 font-medium transition-colors"
+                onClick={toggleMenu}
+              >
+                {item.name}
+              </Link>
+            ))}
+            <div className="pt-4 border-t border-gray-100">
+              {isAuthenticated ? (
+                <div className="space-y-3">
+                    <Link
+                      to="/user-profile"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                      onClick={() => setIsProfileDropdownOpen(false)}
+                    >
+                      My Profile
+                    </Link>
+                  <button
+                    onClick={() => {
+                      handleLogout()
+                      toggleMenu()
+                    }}
+                    className="block w-full text-left px-3 py-2 text-red-600 hover:text-red-700 font-medium"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <Link
+                    to="/login"
+                    className="block px-3 py-2 text-gray-700 hover:text-indigo-600 font-medium"
+                    onClick={toggleMenu}
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    to="/login"
+                    className="block bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-full text-center font-medium"
+                    onClick={toggleMenu}
+                  >
+                    Get Started
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   )
 }

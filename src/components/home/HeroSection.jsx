@@ -344,8 +344,15 @@ export default function HeroSection() {
         intervalRef.current = null;
       }
     };
-  }, []);
+  }, [serverStatus.isServerAvailable]);
 
+
+
+
+  useEffect(() => {
+  checkServerStatus();
+  // eslint-disable-next-line
+}, []);
   // Format countdown time
   const formatCountdown = (seconds) => {
     const minutes = Math.floor(seconds / 60);

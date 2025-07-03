@@ -1,36 +1,37 @@
-import { Link } from "react-router-dom"
-import { ArrowRight, Sparkles } from "lucide-react"
+// import { Link } from "react-router-dom"
+// import { ArrowRight, Sparkles } from "lucide-react"
 
-function AboutUs() {
-  return (
+// function AboutUs() {
+//   return (
    
-   <section className="py-24 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-10 left-10 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-64 h-64 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
-      </div>
+//    <section className="py-24 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 relative overflow-hidden">
+//       {/* Background Elements */}
+//       <div className="absolute inset-0">
+//         <div className="absolute top-10 left-10 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+//         <div className="absolute bottom-10 right-10 w-64 h-64 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
+//       </div>
 
-    <section className="mt-50 px-10 sm:px-15 lg:px-20">
-  <div className="max-w-7xl mx-auto bg-white/10 backdrop-blur-md rounded-xl p-8 text-white text-center shadow-md hover:shadow-lg transition">
-    <div className="inline-flex items-center justify-center gap-2 mb-6"> 
-    </div> 
+//     <section className="mt-50 px-10 sm:px-15 lg:px-20">
+//   <div className="max-w-7xl mx-auto bg-white/10 backdrop-blur-md rounded-xl p-8 text-white text-center shadow-md hover:shadow-lg transition">
+//     <div className="inline-flex items-center justify-center gap-2 mb-6"> 
+//     </div> 
   
-  <h2 className="text-2xl sm:text-1xl font-bold text-white mb-4">
-  <span className="text-yellow-300 animate-pulse drop-shadow-[0_0_6px_rgba(255,255,0,0.6)]">PincodeAds</span> isn’t just a <span className="text-yellow-300">Platform</span> — 
-  it’s a <span className="text-pink-400 font-semibold">hyperlocal revolution</span>.
-</h2>
+//   <h2 className="text-2xl sm:text-1xl font-bold text-white mb-4">
+//   <span className="text-yellow-300 animate-pulse drop-shadow-[0_0_6px_rgba(255,255,0,0.6)]">PincodeAds</span> isn’t just a <span className="text-yellow-300">Platform</span> — 
+//   it’s a <span className="text-pink-400 font-semibold">hyperlocal revolution</span>.
+// </h2>
 
 
-    <p className="text-indigo-100 text-base leading-relaxed text-justify sm:text-s">
-      PincodeAds (PCA) is a hyperlocal discovery and engagement platform designed to transform how people connect with their nearby services—whether it's gyms, tuition classes, shops, or home businesses. In today’s crowded digital space, users struggle to find trusted, relevant services nearby.
-      <br /><br />
-      PCA bridges this gap with real-time verified listings, precise pincode filtering, and seamless interaction tools. Our mission is to empower local businesses and build connected communities—where discovery becomes effortless and local growth becomes digital.
-      <br /><br />
-      From Tier I cities to remote towns, we’re building a platform that’s inclusive, multilingual, and purpose-driven—because we believe the power of local should be in everyone’s hands.
-    </p>
-  </div>
-</section>
+//     <p className="text-indigo-100 text-base leading-relaxed text-justify sm:text-s">
+//       PincodeAds (PCA) is a hyperlocal discovery and engagement platform designed to transform how people connect with their nearby services—whether it's gyms, tuition classes, shops, or home businesses. In today’s crowded digital space, users struggle to find trusted, relevant services nearby.
+//       <br /><br />
+//       PCA bridges this gap with real-time verified listings, precise pincode filtering, and seamless interaction tools. Our mission is to empower local businesses and build connected communities—where discovery becomes effortless and local growth becomes digital.
+//       <br /><br />
+//       From Tier I cities to remote towns, we’re building a platform that’s inclusive, multilingual, and purpose-driven—because we believe the power of local should be in everyone’s hands.
+//     </p>
+//   </div>
+// </section>
+
 
 {/*<section className="mt-20 px-4 sm:px-6 lg:px-12">
   <h2 className="text-3xl font-bold text-white text-center mb-12">Why PincodeAds (PCA)?</h2>
@@ -189,11 +190,65 @@ function AboutUs() {
     */}
 
 
+// </section>
+
+//  )
+// }
+
+// export default AboutUs
 
 
+
+
+
+import { Link } from "react-router-dom"
+import { ArrowRight, Sparkles } from "lucide-react"
+
+function AboutUs() {
+  return (
+    // 1. Changed main section background to white
+    // 2. Removed the animated background elements as they are designed for a dark background
+    <section className="py-24 bg-gradient-to-br from-gray-50 to-white overflow-hidden">
+      {/* Background Elements (Removed as requested for white background) */}
+      {/* <div className="absolute inset-0">
+        <div className="absolute top-10 left-10 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+        <div className="absolute bottom-10 right-10 w-64 h-64 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
+      </div> */}
+
+    <section className="mt-50 px-10 sm:px-15 lg:px-20">
+      {/* 1. Changed inner card background from transparent/blurred to solid white (or a very light gray like bg-gray-50 for subtle contrast) */}
+      {/* 2. Changed the overall text color for this block from text-white to text-gray-900 for readability */}
+      <div className="max-w-7xl mx-auto bg-white rounded-xl p-8 text-gray-900 text-center shadow-md hover:shadow-lg transition">
+        <div className="inline-flex items-center justify-center gap-2 mb-6"> 
+        </div> 
       
+        {/* Changed heading text color from text-white to text-gray-900 for readability */}
+        <h2 className="text-2xl sm:text-1xl font-bold text-gray-900 mb-4">
+  <span className="text-yellow-500 animate-pulse drop-shadow-[0_0_6px_rgba(255,255,0,0.6)]">
+    PincodeAds
+  </span>{" "}
+  <span className="text-yellow-500">
+    isn’t just a Platform —
+  </span>
+  <br />
+  <span className="text-pink-600 font-semibold">
+    it’s a hyperlocal revolution.
+  </span>
+</h2>
+
+        {/* Changed paragraph text color from text-indigo-100 to text-gray-700 for readability */}
+        <p className="text-gray-700 text-base leading-relaxed text-justify sm:text-s">
+          PincodeAds (PCA) is a hyperlocal discovery and engagement platform designed to transform how people connect with their nearby services—whether it's gyms, tuition classes, shops, or home businesses. In today’s crowded digital space, users struggle to find trusted, relevant services nearby.
+          <br /><br />
+          PCA bridges this gap with real-time verified listings, precise pincode filtering, and seamless interaction tools. Our mission is to empower local businesses and build connected communities—where discovery becomes effortless and local growth becomes digital.
+          <br /><br />
+          From Tier I cities to remote towns, we’re building a platform that’s inclusive, multilingual, and purpose-driven—because we believe the power of local should be in everyone’s hands.
+        </p>
+      </div>
+    </section>
     </section>
   )
 }
 
 export default AboutUs
+
