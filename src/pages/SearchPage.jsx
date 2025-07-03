@@ -21,7 +21,7 @@ function SearchPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <SearchHeader />
-      <div className="grid lg:grid-cols-4 gap-8">
+      <div className="grid lg:grid-cols-0 gap-8">
         {/* <div className="lg:col-span-1">
           <SearchFilters filters={filters} setFilters={setFilters} />
         </div> */}

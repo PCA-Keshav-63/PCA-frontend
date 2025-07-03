@@ -199,7 +199,7 @@ function Footer() {
             <ul className="space-y-3">
               {[
                 { name: "List Your Business", path: "/list-business" },
-                { name: "Business Dashboard", path: "/dashboard" },
+                { name: "Business Dashboard", path: "*" },
                 { name: "Pricing Plans", path: "/pricing" },
                 { name: "Success Stories", path: "/stories" },
                 { name: "Business Resources", path: "/resources" },
