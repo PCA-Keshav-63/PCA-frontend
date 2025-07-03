@@ -355,7 +355,7 @@ function AboutPage() {
     {
       name: "Saumya Shah",
       role: "Full-Stack developer",
-      bio: "Saumya is a focused and passionate Computer Engineering student with a strong interest in full-stack development.",
+      bio: "Saumya is a passionate full-stack developer skilled in building efficient web and mobile applications using Node.js, Express.js, Spring Boot, React Native, MySQL, and MongoDB.",
       color: "from-green-500 to-teal-500",
       img: "../Saumya.png",
       linkedin: "https://www.linkedin.com/in/saumya-shah-075201277",
