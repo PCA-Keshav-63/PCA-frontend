@@ -113,13 +113,14 @@ function BusinessCard({ business }) {
   } = business
 
   const { state, dispatch } = useApp()
-
+  console.log("Business Data:", business)
   // Parse JSON strings safely
   const keywords = keywordsJson ? JSON.parse(keywordsJson) : []
   const phoneNumbers = phoneNumbersJson ? JSON.parse(phoneNumbersJson) : []
   const primaryImage = images && images.length > 0 ? images[0].imageUrl : null
-  const owner = businessOwner && businessOwner.length > 0 ? businessOwner[0] : null
-
+  // const owner = businessOwner && businessOwner.length > 0 ? businessOwner : null
+  const ownerName = businessOwner?.name;
+  const ownerProfilePicture = businessOwner?.profilePictureUrl;
   // Format location
   const fullAddress = [address, city, district, pincode].filter(Boolean).join(", ")
 
@@ -166,8 +167,21 @@ function BusinessCard({ business }) {
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-1">
                   {title}
-                  {owner && <span className="text-sm font-normal text-gray-600 ml-2">- {owner.name}</span>}
                 </h3>
+                    {(ownerProfilePicture || ownerName) && (
+                   <div className="flex items-center mb-1">
+                     {ownerProfilePicture && (
+                       <img
+                         src={ownerProfilePicture}
+                         alt={ownerName}
+                         className="w-6 h-6 rounded-full border border-gray-200 mr-2"
+                       />
+                    )}
+                      {ownerName && (
+                       <span className="text-sm font-normal text-gray-600">by {ownerName}
+                       </span>
+                     )}
+                   </div>)}
                 {description && <p className="text-sm text-gray-600 mb-2 line-clamp-2">{description}</p>}
               </div>
             </div>
