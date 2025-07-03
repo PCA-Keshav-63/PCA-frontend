@@ -595,13 +595,16 @@ const pcaCategories = [
 ];
 
 export default function Seo() {
-  const [active, setActive] = useState("Accommodation");
+  const categoryKeys = Object.keys(categories);
+  const [active, setActive] = useState(
+    categoryKeys[Math.floor(Math.random() * categoryKeys.length)]
+  );
 
   return (
     <section className="p-6 bg-white">
       {/* ✅ Dynamic SEO Meta Tags */}
       <SeoMeta
-        title={`Explore ${active} | PincodeAds`}
+        title={`PincodeAds | Explore ${active}`}
         description={`Find trusted ${active} services in your area using PincodeAds' smart hyperlocal search.`}
       />
 

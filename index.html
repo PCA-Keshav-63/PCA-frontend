@@ -1,14 +1,58 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="/favicon.ico" href="public/pca-top-logo.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="google-site-verification" content="AplKg68qC9ZnxFNskWm3YaDtIvZ1iJQpxb7rUnD6qUs" />
-    <title>PincodeAds</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- ✅ Title (default fallback, will be overwritten by Helmet) -->
+  <title>PincodeAds - Search Local Services by Pincode</title>
+  <!-- ✅ Favicon -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+  <!-- ✅ Responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ✅ Default Description (fallback only) -->
+  <meta name="description"
+    content="PincodeAds helps you find verified local businesses and services by pincode. Discover everything around you — fast, filtered, and trusted." />
+
+  <!-- ✅ Google Search Verification -->
+  <meta name="google-site-verification" content="AplKg68qC9ZnxFNskWm3YaDtIvZ1iJQpxb7rUnD6qUs" />
+
+  <!-- ✅ Open Graph Meta (fallback, overridden by SeoMeta.jsx) -->
+  <meta property="og:title" content="PincodeAds - Search Local Services by Pincode" />
+  <meta property="og:description" content="Discover and explore local businesses by pincode across India." />
+  <meta property="og:image" content="https://pca.pincodeads.com/logo.png" />
+  <meta property="og:url" content="https://pca.pincodeads.com" />
+  <meta property="og:type" content="website" />
+
+  <!-- ✅ Twitter Card Meta -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PincodeAds - Find Local Services" />
+  <meta name="twitter:description" content="Smart hyperlocal search platform to find trusted services by pincode." />
+  <meta name="twitter:image" content="https://pca.pincodeads.com/logo.png" />
+
+  <!-- ✅ Structured Data (Basic Org Schema for fallback) -->
+  <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "PincodeAds",
+        "url": "https://pca.pincodeads.com",
+        "logo": "https://pca.pincodeads.com/logo.png",
+        "sameAs": [
+          "https://facebook.com/pincodeads",
+          "https://twitter.com/pincodeads",
+          "https://instagram.com/pincodeads",
+          "https://linkedin.com/company/pincodeads"
+        ]
+      }
+    </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>

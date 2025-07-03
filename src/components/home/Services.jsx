@@ -69,57 +69,69 @@ const services = [
 
 import React, { useEffect } from "react";
 
-const Services = [
-  { icon: "🦷", title: "Dentists", count: "1,200+", desc: "Find experienced dentists nearby." },
-  { icon: "🎨", title: "Painting", count: "950+", desc: "Professional painting for home & office." },
-  { icon: "🏥", title: "Hospitals", count: "1,800+", desc: "Multi-specialty hospitals in your city." },
-  { icon: "📚", title: "Coaching", count: "2,200+", desc: "Coaching for school & competitive exams." },
-  { icon: "♻️", title: "Scrap Dealers", count: "600+", desc: "Recycle metal, paper & e-waste." },
-  { icon: "❄️", title: "AC Services", count: "850+", desc: "Installation & repair of all AC brands." },
-];
+// const Services = [
+//   { icon: "🦷", title: "Dentists", count: "1,200+", desc: "Find experienced dentists nearby." },
+//   { icon: "🎨", title: "Painting", count: "950+", desc: "Professional painting for home & office." },
+//   { icon: "🏥", title: "Hospitals", count: "1,800+", desc: "Multi-specialty hospitals in your city." },
+//   { icon: "📚", title: "Coaching", count: "2,200+", desc: "Coaching for school & competitive exams." },
+//   { icon: "♻️", title: "Scrap Dealers", count: "600+", desc: "Recycle metal, paper & e-waste." },
+//   { icon: "❄️", title: "AC Services", count: "850+", desc: "Installation & repair of all AC brands." },
+// ];
 
 export default function AutoScrollingServices() {
-  useEffect(() => {
-    const style = document.createElement("style");
-    style.innerHTML = `
-      @keyframes scrollX {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
-      }
+
+
+ useEffect(() => {
+  const style = document.createElement("style");
+  style.innerHTML = `
+    @keyframes scrollX {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-68%); }
+    }
+    .scrolling-wrapper {
+      animation: scrollX 45s linear infinite;
+      display: flex;
+      width: max-content;
+    }
+    .scrolling-container:hover .scrolling-wrapper {
+      animation-play-state: paused;
+    }
+    @media (max-width: 640px) {
       .scrolling-wrapper {
-        animation: scrollX 30s linear infinite;
-        display: flex;
+        animation-duration: 8s !important;
       }
-      .scrolling-container:hover .scrolling-wrapper {
-        animation-play-state: paused;
-      }
-    `;
-    document.head.appendChild(style);
-    return () => document.head.removeChild(style);
-  }, []);
+    }
+  `;
+  document.head.appendChild(style);
+  return () => document.head.removeChild(style);
+}, []);
 
-  return (
-    <section className="py-16 bg-white">
-      <h2 className="text-3xl font-bold text-center mb-6">
-        <span className="text-purple-600">Services</span>
-      </h2>
-      <p className="text-center text-gray-500 mb-8"></p>
+return (
+  <section className="py-16 bg-white">
+    <h2 className="text-3xl font-bold text-center mb-6">
+      <span className="text-purple-600">Services</span>
+    </h2>
+    <p className="text-center text-gray-500 mb-8"></p>
 
-      <div className="overflow-hidden scrolling-container w-full">
-        <div className="scrolling-wrapper w-max gap-6">
-          {[...services, ...services].map((service, index) => (
-            <div
-              key={index}
-              className="w-72 bg-gray-50 rounded-xl p-5 m-2 text-center shadow hover:shadow-md transition shrink-0"
-            >
-              <div className="text-4xl mb-2">{service.icon}</div>
-              <h3 className="text-lg font-semibold text-gray-800">{service.title}</h3>
+    <div className="overflow-hidden scrolling-container w-full">
+      <div className="scrolling-wrapper gap-6">
+        {[...services, ...services, ...services].map((service, index) => (
+          <div
+            key={index}
+            className="w-72 bg-gray-50 rounded-xl p-5 m-2 text-center shadow hover:shadow-md transition shrink-0"
+          >
+            <div className="text-4xl mb-2">{service.icon}</div>
+            <h3 className="text-lg font-semibold text-gray-800">{service.title}</h3>
+            {service.count && (
               <p className="text-sm text-purple-600 mb-1">{service.count}</p>
-              <p className="text-sm text-gray-500">{service.desc}</p>
-            </div>
-          ))}
-        </div>
+            )}
+            <p className="text-sm text-gray-500">{service.desc}</p>
+          </div>
+        ))}
       </div>
-    </section>
-  );
+    </div>
+  </section>
+);
 }
+
+
