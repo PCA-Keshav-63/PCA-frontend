@@ -331,7 +331,7 @@ function AboutPage() {
     {
       name: "Keshav Suthar",
       role: "Full-Stack developer",
-      bio: "Keshav is a Computer Engineering intern with practical experience in MERN stack and Spring Boot, focused on building clean and efficient web applications.",
+      bio: "Keshav is a full-stack developer skilled in backend development using Spring Boot, Python and the MERN stack. He focuses on production-ready systems, scalable system design, API development, and database management",
       color: "from-purple-500 to-violet-500",
       img: "../Keshav.png",
       linkedin: "https://www.linkedin.com/in/keshav-suthar",
@@ -347,7 +347,7 @@ function AboutPage() {
     {
       name: "Keith Fernandes",
       role: "Data Analytics & ML",
-      bio: "Keith is an Electronics and Telecommunications Engineering student passionate about data science, machine learning, and AI.",
+      bio: "Keith is an Electronics and Telecommunication Engineering student with hands-on experience in data science, machine learning, and AI, building real-world, data-driven applications",
       color: "from-purple-500 to-violet-500",
       img: "../Keith.png",
       linkedin: "https://www.linkedin.com/in/keith-fernandes-4b8777230",
@@ -355,7 +355,7 @@ function AboutPage() {
     {
       name: "Saumya Shah",
       role: "Full-Stack developer",
-      bio: "Saumya is a passionate full-stack developer skilled in building efficient web and mobile applications using Node.js, Express.js, Spring Boot, React Native, MySQL, and MongoDB.",
+      bio: "Saumya is a committed full stack developer skilled in designing and developing robust applications using the Node.js, Spring Boot, and React Native for efficient backend processing and seamless API integrations.",
       color: "from-green-500 to-teal-500",
       img: "../Saumya.png",
       linkedin: "https://www.linkedin.com/in/saumya-shah-075201277",
