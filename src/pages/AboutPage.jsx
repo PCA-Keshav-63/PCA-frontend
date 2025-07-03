@@ -460,6 +460,88 @@ function AboutPage() {
           </div>
         </div>
       </section>
+      
+      {/* Founders Section */}
+      <section
+        className="bg-white  shadow-sm p-8 sm:p-12 border border-gray-100"
+        aria-label="Founding team"
+      >
+        <div className="text-center mb-12 px-4 max-w-3xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+            Founding Team
+          </h2>
+          <p className="text-lg text-gray-600">
+            Visionaries behind PincodeAds
+          </p>
+        </div>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-10 px-4 max-w-5xl mx-auto flex-wrap">
+          {[
+            {
+              name: "ShitalKumar Dagade",
+              role: "CO-FOUNDER & COO",
+              bio: "Electronics Engineer with 25+ years of IT experience and certifications from IBM, Linux, and Sun. A serial entrepreneur, he leads technical operations and oversees HR and finance. He has worked successfully in Hong Kong and Japan. In his free time, he enjoys reading with tea.",
+              img: "../Shital Sir.png",
+            },
+            {
+              name: "ChanchalKumar Dagade",
+              role: "CO-FOUNDER & CEO",
+              bio: "Electronics Engineer with a Master’s in Information Management and 22+ years of IT experience. He brings expertise in marketing, quality control, finance, and public relations driving business growth with strategic insight. He enjoys playing chess in his free time.",
+              img: "../Chanchal Sir.png",
+            },
+          ].map((founder, i) => (
+            <article
+              key={i}
+              className="text-center group max-w-xs sm:max-w-sm"
+            >
+              <img
+                src={founder.img}
+                alt={founder.name}
+                className="w-32 h-32 mx-auto mb-4 rounded-full border-4 border-white shadow-md group-hover:scale-105 transition-transform duration-300 object-cover"
+                loading="lazy"
+              />
+              <h3 className="text-xl font-bold text-gray-900 mb-1">{founder.name}</h3>
+              <p className="text-indigo-600 font-medium mb-2">{founder.role}</p>
+              <p className="text-gray-600 text-sm leading-relaxed">{founder.bio}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* Team Section */}
+      <section
+        className="bg-white shadow-sm p-8 sm:p-12 border border-gray-100 mt-10"
+        aria-label="Team members"
+      >
+        <div className="text-center mb-12 px-4 max-w-3xl mx-auto">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Amazing Team</h2>
+          <p className="text-xl text-gray-600">
+            The backbone behind PincodeAds' execution
+          </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 px-4 max-w-6xl mx-auto">
+          {shuffledTeam
+            .filter((member) => !member.role.toLowerCase().includes("founder")) // exclude founders
+            .map((member, i) => (
+              <article
+                key={member.name + i}
+                className="text-center group"
+                tabIndex={0} // Make cards focusable for accessibility
+              >
+                <img
+                  src={member.img}
+                  alt={member.name}
+                  className="w-32 h-32 mx-auto mb-4 rounded-full border-4 border-white shadow-md group-hover:scale-105 transition-transform duration-300 object-cover"
+                  loading="lazy"
+                />
+                <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
+                <p className="text-indigo-600 font-medium mb-2">
+                  {member.role || "Team Member"}
+                </p>
+                <p className="text-gray-600 text-sm leading-relaxed">{member.bio}</p>
+              </article>
+            ))}
+        </div>
+      </section>
 
       {/* Pie Chart Section */}
       <section
@@ -552,88 +634,6 @@ function AboutPage() {
               </div>
             </article>
           ))}
-        </div>
-      </section>
-
-      {/* Founders Section */}
-      <section
-        className="bg-white  shadow-sm p-8 sm:p-12 border border-gray-100"
-        aria-label="Founding team"
-      >
-        <div className="text-center mb-12 px-4 max-w-3xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-            Founding Team
-          </h2>
-          <p className="text-lg text-gray-600">
-            Visionaries behind PincodeAds
-          </p>
-        </div>
-        <div className="flex flex-col md:flex-row items-center justify-center gap-10 px-4 max-w-5xl mx-auto flex-wrap">
-          {[
-            {
-              name: "ShitalKumar Dagade",
-              role: "CO-FOUNDER & COO",
-              bio: "Electronics Engineer with 25+ years of IT experience and certifications from IBM, Linux, and Sun. A serial entrepreneur, he leads technical operations and oversees HR and finance. He has worked successfully in Hong Kong and Japan. In his free time, he enjoys reading with tea.",
-              img: "../Shital Sir.png",
-            },
-            {
-              name: "ChanchalKumar Dagade",
-              role: "CO-FOUNDER & CEO",
-              bio: "Electronics Engineer with a Master’s in Information Management and 22+ years of IT experience. He brings expertise in marketing, quality control, finance, and public relations driving business growth with strategic insight. He enjoys playing chess in his free time.",
-              img: "../Chanchal Sir.png",
-            },
-          ].map((founder, i) => (
-            <article
-              key={i}
-              className="text-center group max-w-xs sm:max-w-sm"
-            >
-              <img
-                src={founder.img}
-                alt={founder.name}
-                className="w-32 h-32 mx-auto mb-4 rounded-full border-4 border-white shadow-md group-hover:scale-105 transition-transform duration-300 object-cover"
-                loading="lazy"
-              />
-              <h3 className="text-xl font-bold text-gray-900 mb-1">{founder.name}</h3>
-              <p className="text-indigo-600 font-medium mb-2">{founder.role}</p>
-              <p className="text-gray-600 text-sm leading-relaxed">{founder.bio}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* Team Section */}
-      <section
-        className="bg-white shadow-sm p-8 sm:p-12 border border-gray-100 mt-10"
-        aria-label="Team members"
-      >
-        <div className="text-center mb-12 px-4 max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Amazing Team</h2>
-          <p className="text-xl text-gray-600">
-            The backbone behind PincodeAds' execution
-          </p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 px-4 max-w-6xl mx-auto">
-          {shuffledTeam
-            .filter((member) => !member.role.toLowerCase().includes("founder")) // exclude founders
-            .map((member, i) => (
-              <article
-                key={member.name + i}
-                className="text-center group"
-                tabIndex={0} // Make cards focusable for accessibility
-              >
-                <img
-                  src={member.img}
-                  alt={member.name}
-                  className="w-32 h-32 mx-auto mb-4 rounded-full border-4 border-white shadow-md group-hover:scale-105 transition-transform duration-300 object-cover"
-                  loading="lazy"
-                />
-                <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
-                <p className="text-indigo-600 font-medium mb-2">
-                  {member.role || "Team Member"}
-                </p>
-                <p className="text-gray-600 text-sm leading-relaxed">{member.bio}</p>
-              </article>
-            ))}
         </div>
       </section>
 
