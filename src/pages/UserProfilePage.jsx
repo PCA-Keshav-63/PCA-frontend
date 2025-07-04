@@ -808,35 +808,21 @@ const UserProfilePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden backdrop-blur-sm">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 py-6 px-3 sm:px-4 lg:px-6">
+      <div className="max-w-3xl mx-auto">
+  <div className="bg-white rounded-3xl shadow-2xl overflow-hidden backdrop-blur-sm max-w-2xl mx-auto">
+
+
           {/* Enhanced Profile Header */}
-          <div className="relative bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 px-8 py-12 sm:py-16">
-            {/* Removed the dotted background pattern below */}
-            {/* <div className="absolute inset-0 bg-black/10">
-              <div
-                className="absolute inset-0"
-                style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%23ffffff' fillOpacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                }}
-              ></div>
-            </div> */}
+          <div className="relative bg-white px-6 py-6 sm:py-8 border-b">
+
+           
 
             <div className="relative flex flex-col items-center text-center">
               {/* Profile Picture Section */}
               <div className="relative group mb-6">
                 <div className="relative">
-                  {/* <img
-                    src={
-                      profileImage ||
-                      userData.profilePictureUrl ||
-                      "../../public/person.png" ||
-                      "/placeholder.svg"
-                    }
-                    alt=""
-                    className="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-white object-cover shadow-2xl transition-transform duration-300 group-hover:scale-105"
-                  /> */}
+                  
                   <img
                     src={
                       profileImage ||
@@ -876,23 +862,23 @@ const UserProfilePage = () => {
 
               {/* User Info */}
               <div className="space-y-3">
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+                <h3 className="text-1xl sm:text-1xl lg:text-3xl font-bold text-Black tracking-tight">
                   {userData.name}
-                </h1>
+                </h3>
                 <div className="flex items-center justify-center space-x-2 text-indigo-100">
                   <Mail className="w-4 h-4 flex-shrink-0" />
-                  <p className="text-sm sm:text-base font-medium break-all max-w-xs sm:max-w-sm lg:max-w-md">
-                    {userData.email}
-                  </p>
+                  <p className="text-sm sm:text-base font-bold text-gray-800 break-all max-w-xs sm:max-w-sm lg:max-w-md">
+                  {userData.email}
+                   </p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Enhanced Personal Information Section */}
-          <div className="p-8 sm:p-12">
+          <div className="p-6 sm:p-8">
             <div className="mb-8">
-              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 flex items-center mb-6">
+              <h2 className="text-xl sm:text-xl font-bold text-gray-900 flex items-center mb-6">
                 <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mr-4">
                   <User className="w-5 h-5 text-indigo-600" />
                 </div>
@@ -900,7 +886,7 @@ const UserProfilePage = () => {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {/* Full Name */}
               <div className="group">
                 <div className="bg-gray-50 hover:bg-gray-100 rounded-2xl p-6 transition-all duration-300 hover:shadow-md">
@@ -908,9 +894,9 @@ const UserProfilePage = () => {
                     <div className="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center mr-3">
                       <User className="w-4 h-4 text-indigo-600" />
                     </div>
-                    <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Full Name</label>
+                    <label className="text-s font-semibold text-gray-600 uppercase tracking-wide">Full Name</label>
                   </div>
-                  <p className="text-xl font-semibold text-gray-900">{userData.name || "Not provided"}</p>
+                  <p className="text-s font-semibold text-gray-900">{userData.name || "Not provided"}</p>
                 </div>
               </div>
 
@@ -921,9 +907,9 @@ const UserProfilePage = () => {
                     <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
                       <Mail className="w-4 h-4 text-purple-600" />
                     </div>
-                    <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Email Address</label>
+                    <label className="text-s font-semibold text-gray-600 uppercase tracking-wide">Email Address</label>
                   </div>
-                  <p className="text-xl font-semibold text-gray-900 break-all">{userData.email || "Not provided"}</p>
+                  <p className="text-s font-semibold text-gray-900 break-all">{userData.email || "Not provided"}</p>
                 </div>
               </div>
 
@@ -934,9 +920,9 @@ const UserProfilePage = () => {
                     <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mr-3">
                       <Phone className="w-4 h-4 text-green-600" />
                     </div>
-                    <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Phone Number</label>
+                    <label className="text-s font-semibold text-gray-600 uppercase tracking-wide">Phone Number</label>
                   </div>
-                  <p className="text-xl font-semibold text-gray-900">{userData.phoneNumber || "Not provided"}</p>
+                  <p className="text-s font-semibold text-gray-900">{userData.phoneNumber || "Not provided"}</p>
                 </div>
               </div>
 
@@ -947,9 +933,9 @@ const UserProfilePage = () => {
                     <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center mr-3">
                       <Calendar className="w-4 h-4 text-orange-600" />
                     </div>
-                    <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Member Since</label>
+                    <label className="text-s font-semibold text-gray-600 uppercase tracking-wide">Member Since</label>
                   </div>
-                  <p className="text-xl font-semibold text-gray-900">
+                  <p className="text-s font-semibold text-gray-900">
                     {userData.createdAt
                       ? new Date(userData.createdAt).toLocaleDateString("en-US", {
                         year: "numeric",
@@ -968,16 +954,7 @@ const UserProfilePage = () => {
               </div>
             </div>
 
-            {/* Action Button */}
-            {/* <div className="mt-12 text-center">
-              <button
-                onClick={handleEditProfile}
-                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-indigo-300"
-              >
-                <Edit3 className="w-5 h-5 mr-2" />
-                Edit Profile
-              </button>
-            </div> */}
+            
           </div>
         </div>
       </div>
@@ -986,3 +963,5 @@ const UserProfilePage = () => {
 }
 
 export default UserProfilePage
+
+

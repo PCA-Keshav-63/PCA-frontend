@@ -145,6 +145,7 @@ import ShopOwnerRegistrationPage from "./pages/ShopOwnerRegistrationPage.jsx";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx";
 import UserProfilePage from "./pages/UserProfilePage.jsx";
 import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
+import ContactUsPage from "./pages/ContacttUsPage.jsx";
 import NotFoundPage from "./pages/404Page.jsx"; // <-- Import your 404 page
 import { useEffect } from "react";
 
@@ -163,6 +164,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/user-profile" element={<UserProfilePage />} />
+        <Route path="/contact-us" element={<ContactUsPage />} />
         <Route path="/categories" element={<CategoriesPage />} />
         <Route
           path="/categories/:categoryId"

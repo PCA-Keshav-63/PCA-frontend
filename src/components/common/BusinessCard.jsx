@@ -1362,6 +1362,7 @@ function BusinessCard({ business }) {
     address,
     pincode,
     city,
+    category: categories,
     district,
     priceFrom,
     priceTo,
@@ -1498,13 +1499,15 @@ function BusinessCard({ business }) {
               )}
             </>
           ) : (
+          <div className="flex justify-center items-center w-full h-full bg-gray-100 rounded-lg">
             <img
-              src="/placeholder.svg?height=320&width=420"
+              src={categories.iconUrl}
               alt={title}
-              className="w-full h-full object-contain bg-gray-100"
+              className=" w-1/2 h-1/2 object-contain bg-gray-100"
               loading="lazy"
               draggable={false}
             />
+            </div>
           )}
         </div>
 
