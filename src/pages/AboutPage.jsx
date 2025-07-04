@@ -321,7 +321,7 @@ function AboutPage() {
   // Original team data
   const team = [
     {
-      name: "Drivyansh Yadav",
+      name: "Drivyaansh Yadav",
       role: "Full-Stack developer",
       bio: "Drivyaansh is a curious and committed Computer Engineering student with a keen interest in software development and system design.",
       color: "from-purple-500 to-violet-500",
