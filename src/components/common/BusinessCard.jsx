@@ -90,38 +90,6 @@
 
 // export default BusinessCard
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // "use client";
 
 // import { useState, useEffect } from "react";
@@ -317,7 +285,7 @@
 //             >
 //               Book Now
 //             </button>
-            
+
 //             {/* Keywords/Tags */}
 //             {keywords.length > 0 && (
 //               <div className="flex flex-wrap gap-1">
@@ -340,18 +308,6 @@
 // }
 
 // export default BusinessCard;
-
-
-
-
-
-
-
-
-
-
-
-
 
 // "use client";
 
@@ -578,33 +534,6 @@
 
 // export default BusinessCard;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // "use client"
 
 // import { MapPin, Phone, Clock } from "lucide-react"
@@ -753,30 +682,6 @@
 // }
 
 // export default BusinessCard
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // "use client"
 
@@ -1018,32 +923,6 @@
 // }
 
 // export default BusinessCard
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // "use client"
 
@@ -1320,35 +1199,13 @@
 
 // export default BusinessCard
 
+"use client";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"use client"
-
-import { useState, useEffect } from "react"
-import { MapPin, Phone, Clock, Star, User } from "lucide-react"
-import { useApp } from "../../context/AppContext.jsx"
-
+import { useState, useEffect } from "react";
+import { MapPin, Phone, Clock, Star, User } from "lucide-react";
+import { useApp } from "../../context/AppContext.jsx";
+import { useAuthStore } from "../../store/authStore"; // Zustand store for authentication
+import toast from "react-hot-toast";
 /**
  * Renders a responsive and visually enhanced business card.
  *
@@ -1356,6 +1213,7 @@ import { useApp } from "../../context/AppContext.jsx"
  * @param {object} props.business - The business data object.
  */
 function BusinessCard({ business }) {
+  const { user, isAuthenticated, checkAuth, logout } = useAuthStore();
   const {
     title,
     description,
@@ -1376,94 +1234,98 @@ function BusinessCard({ business }) {
     isTrending,
     isPopular,
     isVerified,
-  } = business
+  } = business;
 
-  const { state, dispatch } = useApp()
-  const isAuthenticated = state.isAuthenticated
+  const { state, dispatch } = useApp();
 
   // Parse JSON strings safely
-  const keywords = keywordsJson ? JSON.parse(keywordsJson) : []
-  const phoneNumbers = phoneNumbersJson ? JSON.parse(phoneNumbersJson) : []
-  const owner = businessOwner && businessOwner.length > 0 ? businessOwner[0] : null
+  const keywords = keywordsJson ? JSON.parse(keywordsJson) : [];
+  const phoneNumbers =
+    phoneNumbersJson && phoneNumbersJson !== "null"
+      ? JSON.parse(phoneNumbersJson)
+      : [];
+  const owner =
+    businessOwner && businessOwner.length > 0 ? businessOwner[0] : null;
+  console.log("phonenumber", phoneNumbers);
 
   // Carousel state for auto-swipe and multi-image display
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const [imagesPerView, setImagesPerView] = useState(1)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imagesPerView, setImagesPerView] = useState(1);
 
   // Responsive: show more images on desktop
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth >= 1024) {
-        setImagesPerView(1) // Show 2 images on large screens
+        setImagesPerView(1); // Show 2 images on large screens
       } else if (window.innerWidth >= 640) {
-        setImagesPerView(1) // Show 1 image on tablets
+        setImagesPerView(1); // Show 1 image on tablets
       } else {
-        setImagesPerView(1) // Show 1 image on mobile
+        setImagesPerView(1); // Show 1 image on mobile
       }
     }
-    handleResize()
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     if (images && images.length > imagesPerView) {
       const interval = setInterval(() => {
         setCurrentImageIndex((prevIndex) =>
-          prevIndex + imagesPerView >= images.length ? 0 : prevIndex + imagesPerView
-        )
-      }, 3000)
-      return () => clearInterval(interval)
+          prevIndex + imagesPerView >= images.length
+            ? 0
+            : prevIndex + imagesPerView
+        );
+      }, 3000);
+      return () => clearInterval(interval);
     }
-  }, [images, imagesPerView])
+  }, [images, imagesPerView]);
 
   // Format location
-  const fullAddress = [address, city, district, pincode].filter(Boolean).join(", ")
+  const fullAddress = [address, city, district, pincode]
+    .filter(Boolean)
+    .join(", ");
 
   // Format price range
   const priceRange =
     priceFrom && priceTo
       ? `₹${priceFrom} - ₹${priceTo}`
       : priceFrom
-        ? `From ₹${priceFrom}`
-        : priceTo
-          ? `Up to ₹${priceTo}`
-          : null
+      ? `From ₹${priceFrom}`
+      : priceTo
+      ? `Up to ₹${priceTo}`
+      : null;
 
   const handleBookNow = () => {
-    if (!isAuthenticated) {
-      dispatch({ type: "SHOW_AUTH_MODAL" })
-      window.location.href = "/login"
-    } else {
-      // Implement actual booking logic or navigation here
-      console.log("Booking service for:", title)
-    }
-  }
+    toast("This feature is coming soon!", { icon: "🚧" });
+  };
 
   const handleCall = (phoneNumber) => {
-    window.location.href = `tel:${phoneNumber}`
-  }
+    window.location.href = `tel:${phoneNumber}`;
+  };
 
   // Responsive image height for desktop
-  const desktopImageHeight = "h-80" // 20rem (320px), adjust as needed
+  const desktopImageHeight = "h-80"; // 20rem (320px), adjust as needed
 
   // Calculate visible images for carousel
   const getVisibleImages = () => {
-    if (!images || images.length === 0) return []
-    if (images.length <= imagesPerView) return images
-    let visible = []
+    if (!images || images.length === 0) return [];
+    if (images.length <= imagesPerView) return images;
+    let visible = [];
     for (let i = 0; i < imagesPerView; i++) {
-      visible.push(images[(currentImageIndex + i) % images.length])
+      visible.push(images[(currentImageIndex + i) % images.length]);
     }
-    return visible
-  }
+    return visible;
+  };
 
   return (
     <div className="bg-white rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 overflow-hidden group">
       {/* Responsive layout: flex-col on small screens, flex-row on medium+ */}
       <div className="flex flex-col md:flex-row">
         {/* Image Carousel Section */}
-        <div className={`relative w-full md:w-[420px] ${desktopImageHeight} flex-shrink-0 overflow-hidden`}>
+        <div
+          className={`relative w-full md:w-[420px] ${desktopImageHeight} flex-shrink-0 overflow-hidden`}
+        >
           {images && images.length > 0 ? (
             <>
               <div className="flex h-full w-full gap-2 justify-center items-center">
@@ -1489,7 +1351,9 @@ function BusinessCard({ business }) {
                     <span
                       key={index}
                       className={`w-3 h-3 rounded-full cursor-pointer ${
-                        index === currentImageIndex ? "bg-indigo-600 shadow-md" : "bg-white/60"
+                        index === currentImageIndex
+                          ? "bg-indigo-600 shadow-md"
+                          : "bg-white/60"
                       }`}
                       aria-label={`Slide ${index + 1}`}
                       onClick={() => setCurrentImageIndex(index)}
@@ -1499,14 +1363,14 @@ function BusinessCard({ business }) {
               )}
             </>
           ) : (
-          <div className="flex justify-center items-center w-full h-full bg-gray-100 rounded-lg">
-            <img
-              src={categories.iconUrl}
-              alt={title}
-              className=" w-1/2 h-1/2 object-contain bg-gray-100"
-              loading="lazy"
-              draggable={false}
-            />
+            <div className="flex justify-center items-center w-full h-full bg-gray-100 rounded-lg">
+              <img
+                src={categories.iconUrl}
+                alt={title}
+                className=" w-1/2 h-1/2 object-contain bg-gray-100"
+                loading="lazy"
+                draggable={false}
+              />
             </div>
           )}
         </div>
@@ -1525,7 +1389,10 @@ function BusinessCard({ business }) {
                     {rating && totalReviews && (
                       <div className="flex items-center text-sm font-semibold text-gray-800 bg-green-100 px-2 py-0.5 rounded-full">
                         <Star className="w-3 h-3 text-green-500 mr-1 fill-current" />
-                        {rating} <span className="font-normal text-gray-600 ml-1">({totalReviews})</span>
+                        {rating}{" "}
+                        <span className="font-normal text-gray-600 ml-1">
+                          ({totalReviews})
+                        </span>
                       </div>
                     )}
                     {isTrending && (
@@ -1564,7 +1431,11 @@ function BusinessCard({ business }) {
                   </span>
                 </div>
               )}
-              {description && <p className="text-sm text-gray-600 mt-2 line-clamp-2">{description}</p>}
+              {description && (
+                <p className="text-sm text-gray-600 mt-2 line-clamp-2">
+                  {description}
+                </p>
+              )}
             </div>
 
             {/* Keywords/Tags */}
@@ -1599,7 +1470,10 @@ function BusinessCard({ business }) {
               )}
               {priceRange && (
                 <div className="flex items-center">
-                  <span className="text-gray-700 font-semibold">{timings && "• "}{priceRange}</span>
+                  <span className="text-gray-700 font-semibold">
+                    {timings && "• "}
+                    {priceRange}
+                  </span>
                 </div>
               )}
             </div>
@@ -1639,7 +1513,7 @@ function BusinessCard({ business }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default BusinessCard
+export default BusinessCard;

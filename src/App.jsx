@@ -145,9 +145,10 @@ import ShopOwnerRegistrationPage from "./pages/ShopOwnerRegistrationPage.jsx";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx";
 import UserProfilePage from "./pages/UserProfilePage.jsx";
 import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
-import ContactUsPage from "./pages/ContacttUsPage.jsx";
+import ContactUsPage from "./pages/ContactUsPage.jsx";
 import NotFoundPage from "./pages/404Page.jsx"; // <-- Import your 404 page
 import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   useEffect(() => {
@@ -156,6 +157,43 @@ function App() {
   }, []);
   return (
     <Layout>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            borderRadius: "10px",
+            background: "#fff",
+            color: "#333",
+            boxShadow: "0 4px 24px 0 rgba(80, 0, 200, 0.08)",
+            fontSize: "1rem",
+            padding: "16px 20px",
+            border: "1px solid #e9e9f3",
+          },
+          success: {
+            style: {
+              background: "#e9fbe9",
+              color: "#1a7f37",
+              border: "1px solid #b6e7c9",
+            },
+            iconTheme: {
+              primary: "#1a7f37",
+              secondary: "#fff",
+            },
+          },
+          error: {
+            style: {
+              background: "#fff0f0",
+              color: "#d32f2f",
+              border: "1px solid #f7bdbd",
+            },
+            iconTheme: {
+              primary: "#d32f2f",
+              secondary: "#fff",
+            },
+          },
+        }}
+      />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/search" element={<SearchPage />} />

@@ -301,7 +301,7 @@ export default function HeroSection() {
           clearInterval(intervalRef.current);
           intervalRef.current = null;
         }
-        toast.success("We are back!", { icon: "🎉" });
+        // toast.success("We are back!", { icon: "🎉" });
       } else {
         setServerStatus((prev) => ({
           ...prev,

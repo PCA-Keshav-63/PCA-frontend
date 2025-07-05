@@ -313,9 +313,6 @@
 
 
 
-
-
-
 "use client";
 
 import React, { useMemo } from "react";
@@ -352,7 +349,7 @@ function AboutPage() {
     {
       name: "Shreeyansh Singh",
       role: "Full-Stack developer",
-      bio: "Shreeyansh is a full-stack developer passionate about solving real-world problems. Skilled in frontend and growing expertise in MERN stack , he builds scalable web applications.",
+      bio: "Shreeyansh is a Computer Engineering student with strong expertise in frontend development and a growing passion for full-stack engineering.",
       color: "from-purple-500 to-violet-500",
       img: "../Shreeyansh.png",
       linkedin: "https://www.linkedin.com/in/shreeyansh-singh-858ab633b",
@@ -406,34 +403,15 @@ function AboutPage() {
       linkedin: "https://www.linkedin.com/in/tanhaa-mehta-582727273",
     },
   ];
-  
-  const specialNames = [
-    "Shreeyansh Singh",
-    "Keshav Suthar",
-    "Saumya Shah"
-  ];
 
-  const specialMembers = team.filter(member => specialNames.includes(member.name));
-  const otherMembers = team.filter(member => !specialNames.includes(member.name));
-
-  // Shuffle helpers
-  function shuffle(arr) {
-    const array = [...arr];
+  // Shuffle team randomly on each render using useMemo, to preserve order during the same render
+  const shuffledTeam = useMemo(() => {
+    const array = [...team];
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
-  }
-
-  // Memoized random selection for stable render
-  const { topThree, restSix } = useMemo(() => {
-    const shuffledSpecial = shuffle(specialMembers);
-    const shuffledOthers = shuffle(otherMembers);
-    return {
-      topThree: shuffledSpecial,
-      restSix: shuffledOthers
-    };
   }, [team]);
 
   const features = [
@@ -561,7 +539,7 @@ function AboutPage() {
       </section>
 
       {/* Team Section */}
-            <section
+      <section
         className="bg-white shadow-sm p-8 sm:p-12 border border-gray-100 mt-10"
         aria-label="Team members"
       >
@@ -574,19 +552,20 @@ function AboutPage() {
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 px-4 max-w-6xl mx-auto">
-          {/* Top 3: Shreeyansh, Keshav, Saumya in random order */}
-          {topThree.map((member, i) => (
-            <article
-              key={member.name + i}
-              className="text-center group"
-              tabIndex={0}
-            >
-	    <img
-                src={member.img}
-                alt={member.name}
-                className="w-32 h-32 mx-auto mb-4 rounded-full border-4 border-white shadow-md group-hover:scale-105 transition-transform duration-300 object-cover"
-                loading="lazy"
-              />
+          {shuffledTeam
+            .filter((member) => !member.role.toLowerCase().includes("founder")) // exclude founders
+            .map((member, i) => (
+              <article
+                key={member.name + i}
+                className="text-center group"
+                tabIndex={0} // Make cards focusable for accessibility
+              >
+                <img
+                  src={member.img}
+                  alt={member.name}
+                  className="w-32 h-32 mx-auto mb-4 rounded-full border-4 border-white shadow-md group-hover:scale-105 transition-transform duration-300 object-cover"
+                  loading="lazy"
+                />
               <h3 className="text-xl font-bold text-gray-900 mb-1 flex items-center justify-center gap-2 whitespace-nowrap">
                 <a
                   href={member.linkedin}
@@ -599,47 +578,14 @@ function AboutPage() {
                 </a>
                 <span>{member.name}</span>
               </h3>
-              <p className="text-indigo-600 font-medium mb-2">
-                {member.role || "Team Member"}
-              </p>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                {member.bio}
-              </p>
-            </article>
-          ))}
-	   {/* The rest 6: other members, shuffled */}
-          {restSix.map((member, i) => (
-            <article
-              key={member.name + i}
-              className="text-center group"
-              tabIndex={0}
-            >
-              <img
-                src={member.img}
-                alt={member.name}
-                className="w-32 h-32 mx-auto mb-4 rounded-full border-4 border-white shadow-md group-hover:scale-105 transition-transform duration-300 object-cover"
-                loading="lazy"
-              />
-              <h3 className="text-xl font-bold text-gray-900 mb-1 flex items-center justify-center gap-2 whitespace-nowrap">
-                <a
-                  href={member.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-700 hover:text-blue-900 flex-shrink-0 mb-1.5"
-                  aria-label={`LinkedIn profile of ${member.name}`}
-                >
-                  <Linkedin className="w-6 h-6" />
-                </a>
-                <span>{member.name}</span>
-              </h3>
-              <p className="text-indigo-600 font-medium mb-2">
-                {member.role || "Team Member"}
-              </p>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                {member.bio}
-	      </p>
-            </article>
-          ))}
+                <p className="text-indigo-600 font-medium mb-2">
+                  {member.role || "Team Member"}
+                </p>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  {member.bio}
+                </p>
+              </article>
+            ))}
         </div>
       </section>
 

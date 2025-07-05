@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import toast from "react-hot-toast";
 const ContactUsPage = () => {
   const [form, setForm] = useState({
     firstName: "",
@@ -7,15 +7,31 @@ const ContactUsPage = () => {
     email: "",
     message: "",
   });
-  const [submitted, setSubmitted] = useState(false);
+ const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    try {
+      const res = await fetch("https://pincodeads.onrender.com/api/v1.0/contact-us", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      toast.error("Network error. Please try again.");
+    }
+    setLoading(false);
   };
 
   return (
@@ -102,8 +118,9 @@ const ContactUsPage = () => {
                 <button
                   type="submit"
                   className="bg-[#7209b7] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#560bad] transition"
+                  disabled={loading}
                 >
-                  Send Message
+                  {loading ? "Sending..." : "Send Message"}
                 </button>
               </div>
             </form>
