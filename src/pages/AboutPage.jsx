@@ -349,7 +349,7 @@ function AboutPage() {
     {
       name: "Shreeyansh Singh",
       role: "Full-Stack developer",
-      bio: "Shreeyansh is a Computer Engineering student with strong expertise in frontend development and a growing passion for full-stack engineering.",
+      bio: "Shreeyansh is a full-stack developer passionate about solving real-world problems. Skilled in frontend and growing expertise in MERN stack , he builds scalable web applications.",
       color: "from-purple-500 to-violet-500",
       img: "../Shreeyansh.png",
       linkedin: "https://www.linkedin.com/in/shreeyansh-singh-858ab633b",
