@@ -241,6 +241,7 @@ export default function HeroSection() {
     "subcategoryName",
     "keyword",
   ];
+  const [searching, setSearching] = useState(false);
   const locationFields = ["address", "pincode", "district", "city"];
 
   const navigate = useNavigate();
@@ -346,13 +347,10 @@ export default function HeroSection() {
     };
   }, [serverStatus.isServerAvailable]);
 
-
-
-
   useEffect(() => {
-  checkServerStatus();
-  // eslint-disable-next-line
-}, []);
+    checkServerStatus();
+    // eslint-disable-next-line
+  }, []);
   // Format countdown time
   const formatCountdown = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -478,18 +476,16 @@ export default function HeroSection() {
 
   const handleSearch = async (e) => {
     if (e) e.preventDefault();
+    setSearching(true);
 
     const params = new URLSearchParams();
     if (searchQuery?.trim()) params.append("q", searchQuery.trim());
 
     if (location?.trim()) {
-      // Check if location is a 6-digit pincode
       const pincodeRegex = /^\d{6}$/;
       if (pincodeRegex.test(location.trim())) {
         params.append("pincode", location.trim());
       } else {
-        // Otherwise, send as address, district, and city
-        // Only add as city
         params.append("city", location.trim());
       }
     }
@@ -502,6 +498,8 @@ export default function HeroSection() {
       navigate(`/search?${params.toString()}`, { state: { results: data } });
     } catch {
       navigate(`/search?${params.toString()}`, { state: { results: [] } });
+    } finally {
+      setSearching(false);
     }
   };
 
@@ -566,9 +564,11 @@ export default function HeroSection() {
       {!serverStatus.isServerAvailable && (
         <div className="fixed top-0 left-0 right-0 z-50 bg-yellow-500 text-white p-4 flex items-center justify-center">
           <AlertTriangle className="mr-3 w-6 h-6" />
-          <span className="font-semibold mr-4">{serverStatus.isWakingUp
+          <span className="font-semibold mr-4">
+            {serverStatus.isWakingUp
               ? "Server Under Maintenance, Please Wait..."
-              : "Server Under Maintenance"}</span>
+              : "Server Under Maintenance"}
+          </span>
           <Clock className="mr-2 w-5 h-5" />
           <span className="font-bold">
             Estimated Restart: {formatCountdown(serverStatus.countdownTime)}
@@ -670,10 +670,33 @@ export default function HeroSection() {
 
               <button
                 type="submit"
-                className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl hover:shadow-xl transform hover:scale-105 transition-all duration-200 font-semibold text-lg"
+                className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-4 rounded-xl hover:shadow-xl transform hover:scale-105 transition-all duration-200 font-semibold text-lg flex items-center justify-center gap-2"
                 aria-label="Search"
+                disabled={searching}
               >
-                Search Now
+                {searching && (
+                  <svg
+                    className="animate-spin h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    ></path>
+                  </svg>
+                )}
+                {searching ? "Searching..." : "Search Now"}
               </button>
             </div>
           </form>

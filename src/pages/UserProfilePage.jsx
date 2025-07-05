@@ -827,7 +827,7 @@ const UserProfilePage = () => {
                     src={
                       profileImage ||
                       userData.profilePictureUrl ||
-                      "../../public/person.png" ||
+                      "../../person.png" ||
                       "/placeholder.svg"
                     }
                     alt=""
