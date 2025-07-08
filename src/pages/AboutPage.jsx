@@ -459,21 +459,21 @@ function AboutPage() {
           <div className="flex flex-wrap items-center justify-center space-x-6 space-y-4 sm:space-y-0 bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-gray-100 text-gray-700 font-medium text-center">
             <div className="w-24">
               <div className="text-2xl sm:text-3xl font-extrabold text-indigo-600">
-                2020
+                2025
               </div>
               <div className="text-xs sm:text-sm font-semibold">Founded</div>
             </div>
             <div className="hidden sm:block w-px h-12 bg-gray-300"></div>
             <div className="w-24">
               <div className="text-2xl sm:text-3xl font-extrabold text-purple-600">
-                50K+
+                0
               </div>
               <div className="text-xs sm:text-sm font-semibold">Businesses</div>
             </div>
             <div className="hidden sm:block w-px h-12 bg-gray-300"></div>
             <div className="w-24">
               <div className="text-2xl sm:text-3xl font-extrabold text-green-600">
-                500+
+                2
               </div>
               <div className="text-xs sm:text-sm font-semibold">Cities</div>
             </div>

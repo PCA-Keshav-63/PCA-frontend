@@ -158,13 +158,20 @@ function Footer() {
               in your area.
             </p>
             <div className="flex space-x-4">
-              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, index) => (
+              {[
+                { Icon: Facebook, url: "https://www.facebook.com/yourprofile" },
+                { Icon: Twitter, url: "https://x.com/PincodeAds" },
+                { Icon: Instagram, url: "https://www.instagram.com/pincodeads/" },
+                { Icon: Linkedin, url: "https://www.linkedin.com/in/yourprofile" },
+              ].map(({ Icon, url }, index) => (
                 <a
                   key={index}
-                  href="#"
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-indigo-600 transition-colors duration-200"
                 >
-                  <Icon className="w-5 h-5" />
+                  <Icon className="w-5 h-5 text-white" />
                 </a>
               ))}
             </div>

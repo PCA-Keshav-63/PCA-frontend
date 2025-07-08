@@ -703,10 +703,10 @@ export default function HeroSection() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto mb-16">
             {[
-              { number: "50K+", label: "Trusted Businesses" },
-              { number: "200K+", label: "Happy Customers" },
-              { number: "1M+", label: "Successful Bookings" },
-              { number: "100+", label: "Cities Covered" },
+              { number: "0", label: "Trusted Businesses" },
+              { number: "0", label: "Happy Customers" },
+              { number: "0", label: "Successful Bookings" },
+              { number: "2", label: "Cities Covered" },
             ].map((stat, index) => (
               <div key={index} className="text-center">
                 <div className="text-3xl md:text-4xl font-bold text-white mb-2">
