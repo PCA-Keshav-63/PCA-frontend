@@ -426,9 +426,9 @@ function AboutPage() {
   ];
 
   const statsData = [
-    { name: "Businesses", value: 50000 },
-    { name: "Customers", value: 20000 },
-    { name: "Cities", value: 4000 },
+    { name: "Businesses", value: 5000 },
+    { name: "Customers", value: 0 },
+    { name: "Cities", value: 3 },
   ];
 
   const COLORS = ["#6366F1", "#9333EA", "#10B981"];
@@ -473,7 +473,7 @@ function AboutPage() {
             <div className="hidden sm:block w-px h-12 bg-gray-300"></div>
             <div className="w-24">
               <div className="text-2xl sm:text-3xl font-extrabold text-green-600">
-                2
+                3
               </div>
               <div className="text-xs sm:text-sm font-semibold">Cities</div>
             </div>
@@ -505,7 +505,7 @@ function AboutPage() {
             {
               name: "ChanchalKumar Dagade",
               role: "CO-FOUNDER & CEO",
-              bio: "Electronics Engineer with a Master’s in Information Management and 22+ years of IT experience. He brings expertise in marketing, quality control, finance, and public relations driving business growth with strategic insight. He enjoys playing chess in his free time.",
+              bio: "An Electronics Engineer with a Master’s in Information Management and an MBA from Jamnalal Bajaj Institute of Management Studies (JBIMS), Mumbai, he brings over 22 years of rich experience in the IT industry. His multidisciplinary expertise spans marketing, quality control, finance, and public relations—enabling him to drive business growth through strategic insight and cross-functional leadership. Outside of work, he enjoys playing chess.",
               img: "../Chanchal Sir.png",
               linkedin: "https://in.linkedin.com/in/chanchaldagade",
             },
