@@ -159,10 +159,10 @@ function Footer() {
             </p>
             <div className="flex space-x-4">
               {[
-                { Icon: Facebook, url: "https://www.facebook.com/yourprofile" },
+                { Icon: Facebook, url: null },
                 { Icon: Twitter, url: "https://x.com/PincodeAds" },
                 { Icon: Instagram, url: "https://www.instagram.com/pincodeads/" },
-                { Icon: Linkedin, url: "https://www.linkedin.com/in/yourprofile" },
+                { Icon: Linkedin, url: null },
               ].map(({ Icon, url }, index) => (
                 <a
                   key={index}
