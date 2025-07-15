@@ -426,9 +426,9 @@ function AboutPage() {
   ];
 
   const statsData = [
-    { name: "Businesses", value: 2425 },
+    { name: "Businesses", value: 2942 },
     { name: "Customers", value: 0 },
-    { name: "Pincodes", value: 30 },
+    { name: "Pincodes", value: 32 },
   ];
 
   const COLORS = ["#6366F1", "#9333EA", "#10B981"];
@@ -473,7 +473,7 @@ function AboutPage() {
             <div className="hidden sm:block w-px h-12 bg-gray-300"></div>
             <div className="w-24">
               <div className="text-2xl sm:text-3xl font-extrabold text-green-600">
-                30
+                32
               </div>
               <div className="text-xs sm:text-sm font-semibold">Pincodes</div>
             </div>
