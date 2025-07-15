@@ -1,37 +1,8 @@
 const services = [
   {
-    icon: "🦷",
-    title: "Dentists",
-    
-    desc: "Find experienced dentists for checkups, braces, and oral care near you."
-  },
-  {
-    icon: "🎨",
-    title: "Painting Contractors",
-       desc: "Professional painting services for homes, offices, and buildings."
-  },
-  {
-    icon: "🏥",
-    title: "Hospitals",
-    
-    desc: "Multi-specialty hospitals offering 24x7 emergency and OPD services."
-  },
-  {
-    icon: "🖨️",
-    title: "Printing & Publishing",
-       desc: "Print brochures, business cards, books, and more at great rates."
-  },
-  {
-    icon: "🐜",
-    title: "Pest Control",
-    
-    desc: "Effective solutions for termite, cockroach, and rodent problems."
-  },
-  {
-    icon: "👩‍⚕️",
-    title: "Nursing Services",
-    
-    desc: "Hire qualified nurses for home care and patient monitoring."
+    icon: "❄️",
+    title: "AC Services",
+    desc: "Installation, servicing, and repair of all major AC brands."
   },
   {
     icon: "📚",
@@ -40,19 +11,43 @@ const services = [
     desc: "Top institutes for competitive exams, school subjects, and more."
   },
   {
+    icon: "🦷",
+    title: "Dentists",
+    
+    desc: "Find experienced dentists for checkups, braces, and oral care near you."
+  },
+  {
+    icon: "🏥",
+    title: "Hospitals",
+    
+    desc: "Multi-specialty hospitals offering 24x7 emergency and OPD services."
+  },
+  {
+    icon: "🧹",
+    title: "Housekeeping",
+    
+    desc: "Trained staff for cleaning services in homes, offices, and hotels."
+  },
+  {
+    icon: "🎨",
+    title: "Painting Contractors",
+       desc: "Professional painting services for homes, offices, and buildings."
+  },
+  {
+    icon: "🐜",
+    title: "Pest Control",
+    
+    desc: "Effective solutions for termite, cockroach, and rodent problems."
+  },
+  {
     icon: "🧑‍💼",
     title: "Placement Services",
     desc: "Find job placements and recruitment support across industries."
   },
   {
-    icon: "♻️",
-    title: "Scrap Dealers",
-    desc: "Sell or recycle metal, paper, and e-waste at fair market rates."
-  },
-  {
-    icon: "❄️",
-    title: "AC Services",
-    desc: "Installation, servicing, and repair of all major AC brands."
+    icon: "🖨️",
+    title: "Printing & Publishing",
+       desc: "Print brochures, business cards, books, and more at great rates."
   },
   {
     icon: "📄",
@@ -60,10 +55,15 @@ const services = [
     desc: "Help with GST, company, property, and legal document registrations."
   },
   {
-    icon: "🧹",
-    title: "Housekeeping",
+    icon: "♻️",
+    title: "Scrap Dealers",
+    desc: "Sell or recycle metal, paper, and e-waste at fair market rates."
+  },
+  {
+    icon: "👩‍⚕️",
+    title: "Nursing Services",
     
-    desc: "Trained staff for cleaning services in homes, offices, and hotels."
+    desc: "Hire qualified nurses for home care and patient monitoring."
   },
 ];
 

@@ -426,7 +426,7 @@ function AboutPage() {
   ];
 
   const statsData = [
-    { name: "Businesses", value: 5000 },
+    { name: "Businesses", value: 2425 },
     { name: "Customers", value: 0 },
     { name: "Pincodes", value: 30 },
   ];
