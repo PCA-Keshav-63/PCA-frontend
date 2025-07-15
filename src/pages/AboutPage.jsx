@@ -505,7 +505,7 @@ function AboutPage() {
             {
               name: "ChanchalKumar Dagade",
               role: "CO-FOUNDER & CEO",
-              bio: "An Electronics Engineer with a Master’s in Information Management and an MBA from Jamnalal Bajaj Institute of Management Studies (JBIMS), Mumbai, he brings over 22 years of rich experience in the IT industry. His multidisciplinary expertise spans marketing, quality control, finance, and public relations—enabling him to drive business growth through strategic insight and cross-functional leadership. Outside of work, he enjoys playing chess.",
+              bio: "An Electronics Engineer with a Master’s in Information Management MBA from Jamnalal Bajaj Institute of Management Studies (JBIMS), Mumbai, he brings over 22 years of rich experience in the IT industry. His multidisciplinary expertise spans marketing, quality control, finance, and public relations—enabling him to drive business growth through strategic insight and cross-functional leadership. Outside of work, he enjoys playing chess.",
               img: "../Chanchal Sir.png",
               linkedin: "https://in.linkedin.com/in/chanchaldagade",
             },
