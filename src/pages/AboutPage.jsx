@@ -466,9 +466,9 @@ function AboutPage() {
             <div className="hidden sm:block w-px h-12 bg-gray-300"></div>
             <div className="w-24">
               <div className="text-2xl sm:text-3xl font-extrabold text-purple-600">
-                0
+                2900+
               </div>
-              <div className="text-xs sm:text-sm font-semibold">Businesses</div>
+              <div className="text-xs sm:text-sm font-semibold">Listings</div>
             </div>
             <div className="hidden sm:block w-px h-12 bg-gray-300"></div>
             <div className="w-24">
