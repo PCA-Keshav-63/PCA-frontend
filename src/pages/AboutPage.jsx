@@ -428,7 +428,7 @@ function AboutPage() {
   const statsData = [
     { name: "Businesses", value: 5000 },
     { name: "Customers", value: 0 },
-    { name: "Cities", value: 3 },
+    { name: "Pincodes", value: 30 },
   ];
 
   const COLORS = ["#6366F1", "#9333EA", "#10B981"];
@@ -473,9 +473,9 @@ function AboutPage() {
             <div className="hidden sm:block w-px h-12 bg-gray-300"></div>
             <div className="w-24">
               <div className="text-2xl sm:text-3xl font-extrabold text-green-600">
-                3
+                30
               </div>
-              <div className="text-xs sm:text-sm font-semibold">Cities</div>
+              <div className="text-xs sm:text-sm font-semibold">Pincodes</div>
             </div>
           </div>
         </div>
