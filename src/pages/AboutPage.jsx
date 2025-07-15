@@ -446,7 +446,7 @@ function AboutPage() {
             <Heart className="w-10 h-10 text-white" aria-hidden="true" />
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
-            Connecting Local India to{" "}
+            Empowering Every Pincode with{" "}
             <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
               Opportunities
             </span>
