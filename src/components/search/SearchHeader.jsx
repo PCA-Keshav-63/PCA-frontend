@@ -68,6 +68,9 @@ function SearchHeader() {
   const serviceInputRef = useRef(null)
   const locationInputRef = useRef(null)
 
+  // Loading state
+  const [searching, setSearching] = useState(false)
+
   // Reverse geocode for location autofill
   const reverseGeocode = async (lat, lon) => {
     try {
@@ -92,7 +95,6 @@ function SearchHeader() {
     }
   }
 
-  // Autofill location on mount
   useEffect(() => {
     if (!location) {
       if ("geolocation" in navigator) {
@@ -107,16 +109,13 @@ function SearchHeader() {
               }
             }
           },
-          (error) => {
-            // Geolocation error
-          },
+          () => {},
           { timeout: 10000 }
         )
       }
     }
   }, [dispatch])
 
-  // Helper: fetch and merge suggestions for multiple fields
   const fetchSuggestions = async (fields, value) => {
     const promises = fields.map(field =>
       fetch(`https://pincodeads.onrender.com/api/v1.0/services/autocomplete/${field}?query=${encodeURIComponent(value)}`)
@@ -127,7 +126,6 @@ function SearchHeader() {
     return [...new Set(results.flat().filter(Boolean))]
   }
 
-  // Service input handlers
   const handleServiceChange = async (e) => {
     const value = e.target.value
     dispatch({ type: "SET_SEARCH_QUERY", payload: value })
@@ -141,13 +139,13 @@ function SearchHeader() {
       setShowServiceSuggestions(false)
     }
   }
+
   const handleServiceSuggestionClick = (suggestion) => {
     dispatch({ type: "SET_SEARCH_QUERY", payload: suggestion })
     setShowServiceSuggestions(false)
     serviceInputRef.current.blur()
   }
 
-  // Location input handlers
   const handleLocationChange = async (e) => {
     const value = e.target.value
     dispatch({ type: "SET_LOCATION", payload: value })
@@ -161,13 +159,13 @@ function SearchHeader() {
       setShowLocationSuggestions(false)
     }
   }
+
   const handleLocationSuggestionClick = (suggestion) => {
     dispatch({ type: "SET_LOCATION", payload: suggestion })
     setShowLocationSuggestions(false)
     locationInputRef.current.blur()
   }
 
-  // Search logic
   const handleSearch = async (e) => {
     if (e) e.preventDefault()
     const params = new URLSearchParams()
@@ -180,16 +178,19 @@ function SearchHeader() {
         params.append("city", location.trim())
       }
     }
+
+    setSearching(true)
     try {
       const res = await fetch(`https://pincodeads.onrender.com/api/v1.0/services/search?${params.toString()}`)
       const data = res.ok ? await res.json() : []
       navigate(`/search?${params.toString()}`, { state: { results: data } })
     } catch {
       navigate(`/search?${params.toString()}`, { state: { results: [] } })
+    } finally {
+      setSearching(false)
     }
   }
 
-  // Keyboard navigation
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault()
@@ -231,6 +232,7 @@ function SearchHeader() {
             </ul>
           )}
         </div>
+
         <div className="flex-1 relative">
           <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           <input
@@ -258,11 +260,35 @@ function SearchHeader() {
             </ul>
           )}
         </div>
+
         <button
           type="submit"
-          className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+          className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold flex items-center justify-center gap-2 disabled:opacity-50"
+          disabled={searching}
         >
-          Search
+          {searching && (
+            <svg
+              className="animate-spin h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+              ></path>
+            </svg>
+          )}
+          {searching ? "Searching..." : "Search"}
         </button>
       </form>
     </div>
