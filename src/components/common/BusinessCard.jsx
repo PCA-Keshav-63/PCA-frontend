@@ -4,15 +4,11 @@ import { useState, useEffect } from "react";
 import { MapPin, Phone, Clock, Star, User } from "lucide-react";
 import { useApp } from "../../context/AppContext.jsx";
 import { useAuthStore } from "../../store/authStore"; // Zustand store for authentication
+import { useNavigate } from "react-router-dom"; // For navigation
 import toast from "react-hot-toast";
 
-/**
- * Renders a responsive and visually enhanced business card.
- *
- * @param {object} props - The component props.
- * @param {object} props.business - The business data object.
- */
 function BusinessCard({ business }) {
+  const navigate = useNavigate(); // Initialize navigation
   const { user, isAuthenticated, checkAuth, logout } = useAuthStore();
   const {
     id,
@@ -34,7 +30,6 @@ function BusinessCard({ business }) {
     totalReviews,
     isTrending,
     isPopular,
-    // isVerified will be handled client-side
   } = business;
 
   const { state, dispatch } = useApp();
@@ -49,9 +44,9 @@ function BusinessCard({ business }) {
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [imagesPerView, setImagesPerView] = useState(1);
-  const [isVerified, setIsVerified] = useState(false); // <- Add this state
+  const [isVerified, setIsVerified] = useState(false);
 
-  // Fetch isVerified from backend based on business ID
+  // Fetch verification status
   useEffect(() => {
     async function checkVerificationStatus() {
       try {
@@ -67,21 +62,17 @@ function BusinessCard({ business }) {
     if (id) checkVerificationStatus();
   }, [id]);
 
+  // Responsive image count
   useEffect(() => {
     function handleResize() {
-      if (window.innerWidth >= 1024) {
-        setImagesPerView(1);
-      } else if (window.innerWidth >= 640) {
-        setImagesPerView(1);
-      } else {
-        setImagesPerView(1);
-      }
+      setImagesPerView(1);
     }
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Carousel image change
   useEffect(() => {
     if (images && images.length > imagesPerView) {
       const interval = setInterval(() => {
@@ -116,8 +107,6 @@ function BusinessCard({ business }) {
     window.location.href = `tel:${phoneNumber}`;
   };
 
-  const desktopImageHeight = "h-80";
-
   const getVisibleImages = () => {
     if (!images || images.length === 0) return [];
     if (images.length <= imagesPerView) return images;
@@ -137,29 +126,25 @@ function BusinessCard({ business }) {
       )}
 
       <div className="flex flex-col md:flex-row">
-        <div
-          className={`relative w-full md:w-[420px] ${desktopImageHeight} flex-shrink-0 overflow-hidden`}
-        >
+        <div className={`relative w-full md:w-[420px] h-80 flex-shrink-0 overflow-hidden`}>
           {images && images.length > 0 ? (
-            <>
-              <div className="flex h-full w-full gap-2 justify-center items-center">
-                {getVisibleImages().map((image, idx) => (
-                  <img
-                    key={image.id || idx}
-                    src={image.imageUrl || "/placeholder.svg"}
-                    alt={`${title} - Image ${currentImageIndex + idx + 1}`}
-                    className="w-full h-full object-contain bg-gray-100 rounded-lg"
-                    style={{
-                      maxWidth: imagesPerView > 1 ? "48%" : "100%",
-                      minWidth: imagesPerView > 1 ? "48%" : "100%",
-                      maxHeight: "100%",
-                    }}
-                    loading="lazy"
-                    draggable={false}
-                  />
-                ))}
-              </div>
-            </>
+            <div className="flex h-full w-full gap-2 justify-center items-center">
+              {getVisibleImages().map((image, idx) => (
+                <img
+                  key={image.id || idx}
+                  src={image.imageUrl || "/placeholder.svg"}
+                  alt={`${title} - Image ${currentImageIndex + idx + 1}`}
+                  className="w-full h-full object-contain bg-gray-100 rounded-lg"
+                  style={{
+                    maxWidth: imagesPerView > 1 ? "48%" : "100%",
+                    minWidth: imagesPerView > 1 ? "48%" : "100%",
+                    maxHeight: "100%",
+                  }}
+                  loading="lazy"
+                  draggable={false}
+                />
+              ))}
+            </div>
           ) : (
             <div className="flex justify-center items-center w-full h-full bg-gray-100 rounded-lg">
               <img
@@ -185,7 +170,7 @@ function BusinessCard({ business }) {
                     {rating && totalReviews && (
                       <div className="flex items-center text-sm font-semibold text-gray-800 bg-green-100 px-2 py-0.5 rounded-full">
                         <Star className="w-3 h-3 text-green-500 mr-1 fill-current" />
-                        {rating}{" "}
+                        {rating}
                         <span className="font-normal text-gray-600 ml-1">
                           ({totalReviews})
                         </span>
@@ -209,6 +194,7 @@ function BusinessCard({ business }) {
                   </div>
                 )}
               </div>
+
               {owner && (
                 <div className="flex items-center gap-2 mt-1 mb-2">
                   {owner.profilePictureUrl ? (
@@ -226,6 +212,7 @@ function BusinessCard({ business }) {
                   </span>
                 </div>
               )}
+
               {description && (
                 <p className="text-sm text-gray-600 mt-2 line-clamp-2">
                   {description}
@@ -281,16 +268,18 @@ function BusinessCard({ business }) {
                 Call {phoneNumbers[0]}
               </button>
             )}
+
             {phoneNumbers.length > 0 && !isAuthenticated && (
               <button
-                disabled
-                className="flex items-center bg-gray-300 text-gray-500 px-5 py-2 rounded-lg text-sm font-medium cursor-not-allowed"
+                onClick={() => navigate("/login")}
+                className="flex items-center bg-yellow-500 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50"
                 title="Login to view number"
               >
                 <Phone className="w-4 h-4 mr-2" />
                 Login to view number
               </button>
             )}
+
             <button
               onClick={handleBookNow}
               className="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"

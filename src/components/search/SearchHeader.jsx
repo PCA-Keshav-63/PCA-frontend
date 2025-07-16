@@ -59,19 +59,16 @@ function SearchHeader() {
   const { searchQuery, location } = state
   const navigate = useNavigate()
 
-  // Suggestion state
   const [serviceSuggestions, setServiceSuggestions] = useState([])
   const [showServiceSuggestions, setShowServiceSuggestions] = useState(false)
   const [locationSuggestions, setLocationSuggestions] = useState([])
   const [showLocationSuggestions, setShowLocationSuggestions] = useState(false)
 
+  const [searching, setSearching] = useState(false)
+
   const serviceInputRef = useRef(null)
   const locationInputRef = useRef(null)
 
-  // Loading state
-  const [searching, setSearching] = useState(false)
-
-  // Reverse geocode for location autofill
   const reverseGeocode = async (lat, lon) => {
     try {
       const res = await fetch(
@@ -150,7 +147,7 @@ function SearchHeader() {
     const value = e.target.value
     dispatch({ type: "SET_LOCATION", payload: value })
     if (value.length > 1) {
-      const fields = ["address", "pincode", "district", "city"]
+      const fields = ["pincode", "city"]
       const suggestions = await fetchSuggestions(fields, value)
       setLocationSuggestions(suggestions)
       setShowLocationSuggestions(true)
@@ -205,6 +202,7 @@ function SearchHeader() {
   return (
     <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
       <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-4">
+        {/* Service Search Input */}
         <div className="flex-1 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           <input
@@ -233,12 +231,13 @@ function SearchHeader() {
           )}
         </div>
 
+        {/* Location Input */}
         <div className="flex-1 relative">
           <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           <input
             ref={locationInputRef}
             type="text"
-            placeholder="Enter location"
+            placeholder="Enter pincode or city"
             value={location}
             onChange={handleLocationChange}
             onFocus={() => setShowLocationSuggestions(locationSuggestions.length > 0)}
@@ -248,19 +247,42 @@ function SearchHeader() {
           />
           {showLocationSuggestions && locationSuggestions.length > 0 && (
             <ul className="absolute z-10 left-0 right-0 bg-white border rounded-lg mt-1 shadow-lg max-h-56 overflow-y-auto">
-              {locationSuggestions.map((s, idx) => (
-                <li
-                  key={idx}
-                  className="px-4 py-2 cursor-pointer hover:bg-blue-100"
-                  onClick={() => handleLocationSuggestionClick(s)}
-                >
-                  {s}
-                </li>
-              ))}
+              <>
+                {locationSuggestions.some((s) => /^\d{6}$/.test(s)) && (
+                  <li className="px-4 py-1 text-xs text-gray-500 bg-gray-50">Pincodes</li>
+                )}
+                {locationSuggestions
+                  .filter((s) => /^\d{6}$/.test(s))
+                  .map((s, idx) => (
+                    <li
+                      key={`pin-${idx}`}
+                      className="px-4 py-2 cursor-pointer hover:bg-blue-100"
+                      onClick={() => handleLocationSuggestionClick(s)}
+                    >
+                      {s}
+                    </li>
+                  ))}
+
+                {locationSuggestions.some((s) => !/^\d{6}$/.test(s)) && (
+                  <li className="px-4 py-1 text-xs text-gray-500 bg-gray-50">Cities</li>
+                )}
+                {locationSuggestions
+                  .filter((s) => !/^\d{6}$/.test(s))
+                  .map((s, idx) => (
+                    <li
+                      key={`city-${idx}`}
+                      className="px-4 py-2 cursor-pointer hover:bg-blue-100"
+                      onClick={() => handleLocationSuggestionClick(s)}
+                    >
+                      {s}
+                    </li>
+                  ))}
+              </>
             </ul>
           )}
         </div>
 
+        {/* Submit Button with Loading Spinner */}
         <button
           type="submit"
           className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold flex items-center justify-center gap-2 disabled:opacity-50"
@@ -296,3 +318,4 @@ function SearchHeader() {
 }
 
 export default SearchHeader
+
