@@ -458,7 +458,7 @@ export default function HeroSection() {
     dispatch({ type: "SET_LOCATION", payload: value });
 
     if (value.length > 1) {
-      const fields = ["address", "pincode", "district", "city"];
+      const fields = ["pincode", "district", "city"];
       const suggestions = await fetchSuggestions(fields, value);
       setLocationSuggestions(suggestions);
       setShowLocationSuggestions(true);
@@ -475,33 +475,34 @@ export default function HeroSection() {
   };
 
   const handleSearch = async (e) => {
-    if (e) e.preventDefault();
-    setSearching(true);
+  if (e) e.preventDefault();
+  setSearching(true);
 
-    const params = new URLSearchParams();
-    if (searchQuery?.trim()) params.append("q", searchQuery.trim());
+  const params = new URLSearchParams();
+  if (searchQuery?.trim()) params.append("q", searchQuery.trim());
 
-    if (location?.trim()) {
-      const pincodeRegex = /^\d{6}$/;
-      if (pincodeRegex.test(location.trim())) {
-        params.append("pincode", location.trim());
-      } else {
-        params.append("city", location.trim());
-      }
+  if (location?.trim()) {
+    const pincodeRegex = /^\d{6}$/;
+    if (pincodeRegex.test(location.trim())) {
+      params.append("pincode", location.trim());
+    } else {
+      params.append("city", location.trim());
     }
+  }
 
-    try {
-      const res = await fetch(
-        `https://pincodeads.onrender.com/api/v1.0/services/search?${params.toString()}`
-      );
-      const data = res.ok ? await res.json() : [];
-      navigate(`/search?${params.toString()}`, { state: { results: data } });
-    } catch {
-      navigate(`/search?${params.toString()}`, { state: { results: [] } });
-    } finally {
-      setSearching(false);
-    }
-  };
+  try {
+    const res = await fetch(
+      `https://pincodeads.onrender.com/api/v1.0/services/search?${params.toString()}`
+    );
+    const data = res.ok ? await res.json() : [];
+    navigate(`/search?${params.toString()}`, { state: { results: data } });
+  } catch {
+    navigate(`/search?${params.toString()}`, { state: { results: [] } });
+  } finally {
+    setSearching(false);
+  }
+};
+
 
   // const handleSearch = async (e) => {
   //   if (e) e.preventDefault()
@@ -654,18 +655,41 @@ export default function HeroSection() {
                   autoComplete="off"
                 />
                 {showLocationSuggestions && locationSuggestions.length > 0 && (
-                  <ul className="absolute z-10 left-0 right-0 bg-white border rounded-xl mt-1 shadow-lg max-h-56 overflow-y-auto">
-                    {locationSuggestions.map((s, idx) => (
-                      <li
-                        key={idx}
-                        className="px-4 py-2 cursor-pointer hover:bg-indigo-100"
-                        onClick={() => handleLocationSuggestionClick(s)}
-                      >
-                        {s}
-                      </li>
-                    ))}
-                  </ul>
+  <ul className="absolute z-10 left-0 right-0 bg-white border rounded-lg mt-1 shadow-lg max-h-56 overflow-y-auto">
+    <>
+                {locationSuggestions.some((s) => /^\d{6}$/.test(s)) && (
+                  <li className="px-4 py-1 text-xs text-gray-500 bg-gray-50">Pincodes</li>
                 )}
+                {locationSuggestions
+                  .filter((s) => /^\d{6}$/.test(s))
+                  .map((s, idx) => (
+                    <li
+                      key={`pin-${idx}`}
+                      className="px-4 py-2 cursor-pointer hover:bg-blue-100"
+                      onClick={() => handleLocationSuggestionClick(s)}
+                    >
+                      {s}
+                    </li>
+                  ))}
+
+                {locationSuggestions.some((s) => !/^\d{6}$/.test(s)) && (
+                  <li className="px-4 py-1 text-xs text-gray-500 bg-gray-50">Cities</li>
+                )}
+                {locationSuggestions
+                  .filter((s) => !/^\d{6}$/.test(s))
+                  .map((s, idx) => (
+                    <li
+                      key={`city-${idx}`}
+                      className="px-4 py-2 cursor-pointer hover:bg-blue-100"
+                      onClick={() => handleLocationSuggestionClick(s)}
+                    >
+                      {s}
+                    </li>
+                  ))}
+              </>
+  </ul>
+)}
+
               </div>
 
               <button
