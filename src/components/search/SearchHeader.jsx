@@ -69,6 +69,49 @@ function SearchHeader() {
   const serviceInputRef = useRef(null)
   const locationInputRef = useRef(null)
 
+  const pincodeToCityMap = {
+    "400014": "Dadar",
+    "400050": "Bandra",
+    "400055": "Santacruz",
+    "400057": "Vile Parle",
+    "400058": "Andheri",
+    "400063": "Goregaon",
+    "400064": "Malad",
+    "400066": "Borivali",
+    "400067": "Kandivali",
+    "400068": "Dahisar",
+    "400070": "Kurla",
+    "400092": "Borivali",
+    "401101": "Mira Bhayandar",
+    "401104": "Mira Bhayandar",
+    "401105": "Mira Bhayandar",
+    "401106": "Mira Bhayandar",
+    "401107": "Mira Bhayandar",
+    "401107": "Mira Road",
+    "401202": "Vasai",
+    "401203": "Mira Bhayandar",
+    "401208": "Mira Bhayandar",
+    "421301": "Mira Bhayandar",
+    "421306": "Mira Bhayandar",
+    "421401": "Mira Bhayandar",
+    "421601": "Mira Bhayandar",
+    "424001": "Dhule",
+    "424002": "Dhule",
+    "424004": "Dhule",
+    "424005": "Dhule",
+    "424006": "Dhule",
+    "424311": "Dhule",
+    "425401": "Dhule",
+    "425405": "Dhule",
+    "425418": "Navapur",
+    "425421": "Dhule"
+}
+
+const getCityForPincode = (pincode) => {
+  return pincodeToCityMap[pincode] || ""
+}
+
+
   const reverseGeocode = async (lat, lon) => {
     try {
       const res = await fetch(
@@ -252,16 +295,20 @@ function SearchHeader() {
                   <li className="px-4 py-1 text-xs text-gray-500 bg-gray-50">Pincodes</li>
                 )}
                 {locationSuggestions
-                  .filter((s) => /^\d{6}$/.test(s))
-                  .map((s, idx) => (
-                    <li
-                      key={`pin-${idx}`}
-                      className="px-4 py-2 cursor-pointer hover:bg-blue-100"
-                      onClick={() => handleLocationSuggestionClick(s)}
-                    >
-                      {s}
-                    </li>
-                  ))}
+  .filter((s) => /^\d{6}$/.test(s))
+  .map((s, idx) => {
+    const city = getCityForPincode(s) // 👈 helper function to map pincode to city
+    return (
+      <li
+        key={`pin-${idx}`}
+        className="px-4 py-2 cursor-pointer hover:bg-blue-100"
+        onClick={() => handleLocationSuggestionClick(s)}
+      >
+        {city ? `${s} - ${city}` : s}
+      </li>
+    )
+  })}
+
 
                 {locationSuggestions.some((s) => !/^\d{6}$/.test(s)) && (
                   <li className="px-4 py-1 text-xs text-gray-500 bg-gray-50">Cities</li>
