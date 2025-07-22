@@ -380,8 +380,8 @@ function AboutPage() {
     },
     {
       name: "Lubdhie Dagade",
-      role: "Full-Stack developer",
-      bio: "Lubdhie is a passionate Computer Engineering intern with a strong interest in frontend development and UI/UX design.",
+      role: "Research & Data Strategist",
+      bio: "Lubdhie is a passionate Computer Engineering intern with a strong interest is passionate about exploring data & leading structured research.",
       color: "from-purple-500 to-violet-500",
       img: "../Lubdhie.png",
       linkedin: "https://www.linkedin.com/in/lubdhie-dagade-59ba47343",
