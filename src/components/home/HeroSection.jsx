@@ -242,7 +242,7 @@ export default function HeroSection() {
     "keyword",
   ];
   const [searching, setSearching] = useState(false);
-  const locationFields = ["address", "pincode", "district", "city"];
+  const locationFields = ["pincode", "district", "city"];
 
   const navigate = useNavigate();
 

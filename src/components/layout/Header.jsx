@@ -176,82 +176,73 @@
 
 
 
-"use client"; // Retain the "use client" directive for client-side components
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, User, LogOut, ChevronDown } from "lucide-react"; // Icons for mobile menu and profile dropdown
-import { useAuthStore } from "../../store/authStore"; // Zustand store for authentication
-import { useApp } from "../../context/AppContext.jsx"; // Context for global app state (e.g., menu open/close)
+import { Menu, X, User, LogOut, ChevronDown } from "lucide-react";
+import { useAuthStore } from "../../store/authStore";
+import { useApp } from "../../context/AppContext.jsx";
+import { useTranslation } from "react-i18next"; // ✅ i18next
+import LanguageSelector from "../common/LanguageSelector"; // ✅ Language dropdown
 
 function Header() {
   const { state, dispatch } = useApp();
-  const { isMenuOpen } = state; // Get menu state from global context
-  const { user, isAuthenticated, checkAuth, logout } = useAuthStore(); // Auth state and actions from Zustand
-  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false); // State for profile dropdown visibility
+  const { isMenuOpen } = state;
+  const { user, isAuthenticated, checkAuth, logout } = useAuthStore();
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const { t } = useTranslation(); // ✅ translation hook
 
-  // Log authentication status for debugging
-  console.log("is authenticated ", isAuthenticated, user);
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
 
-  // Function to toggle the mobile menu state
+  const handleLogout = () => {
+    logout();
+    setIsProfileDropdownOpen(false);
+  };
+
   const toggleMenu = () => {
     dispatch({ type: "TOGGLE_MENU" });
   };
 
-  // Check authentication status on component mount
-  useEffect(() => {
-    checkAuth();
-  }, [checkAuth]); // Dependency array includes checkAuth to avoid stale closure issues if checkAuth itself changes (unlikely for a store action)
-
-  // Handle user logout
-  const handleLogout = () => {
-    logout(); // Call the logout action from the auth store
-    setIsProfileDropdownOpen(false); // Close the profile dropdown after logout
-  };
-
-  // iOS specific style fix for transform-related rendering issues (from first header)
   const iosLogoFix = {
-    transform: 'translateZ(0)',
-    WebkitTransform: 'translateZ(0)',
-    WebkitBackfaceVisibility: 'hidden',
-    backfaceVisibility: 'hidden'
+    transform: "translateZ(0)",
+    WebkitTransform: "translateZ(0)",
+    WebkitBackfaceVisibility: "hidden",
+    backfaceVisibility: "hidden",
   };
 
-  // Navigation links for desktop and mobile
   const navigation = [
-    { name: "Home", path: "/" },
-    { name: "Search", path: "/search" },
-    { name: "Categories", path: "/categories" },
-    { name: "About", path: "/about" }, 
-    { name: "Contact Us", path: "/contact-us", number: "8452-81-3108" }
+    { name: t("Home"), path: "/" },
+    { name: t("Search"), path: "/search" },
+    { name: t("Categories"), path: "/categories" },
+    { name: t("About"), path: "/about" },
+    { name: t("Contact"), path: "/contact-us", number: "8452-81-3108" },
   ];
 
   return (
     <header
-      className="bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-gray-100 will-change-transform" // Combined classNames from both headers
-      style={iosLogoFix} // Apply iOS fix to the header itself for general performance
+      className="bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-gray-100 will-change-transform"
+      style={iosLogoFix}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> {/* Responsive container from second header */}
-        <div className="flex justify-between items-center h-20"> {/* Fixed height and alignment from second header */}
-          {/* Logo Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
+          {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-24 h-20 rounded-xl flex items-center justify-center overflow-hidden"> {/* Logo container styling from first header */}
+            <div className="w-24 h-20 rounded-xl flex items-center justify-center overflow-hidden">
               <img
-                src="../../uppar.jpg" // Logo image source
+                src="../../uppar.jpg"
                 alt="PincodeAds Logo"
-                className="w-full h-full object-contain max-w-none" // Image styling for proper fit from first header
+                className="w-full h-full object-contain max-w-none"
                 style={{
-                  imageRendering: '-webkit-optimize-contrast', // Image rendering optimization from first header
-                  WebkitBackfaceVisibility: 'hidden',
-                  backfaceVisibility: 'hidden',
-                  ...iosLogoFix // Apply iOS fix specifically to the image as well
+                  imageRendering: "-webkit-optimize-contrast",
+                  WebkitBackfaceVisibility: "hidden",
+                  backfaceVisibility: "hidden",
+                  ...iosLogoFix,
                 }}
               />
             </div>
-            {/* PincodeAds text with gradient style (from combined understanding) */}
-            {/* <div className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              PincodeAds
-            </div> */}
           </Link>
 
           {/* Desktop Navigation */}
@@ -271,70 +262,74 @@ function Header() {
             ))}
           </nav>
 
-          {/* Auth Section for Desktop */}
+          {/* Auth + Language for Desktop */}
           <div className="hidden md:flex items-center space-x-4">
             {isAuthenticated ? (
               <div className="relative">
                 <button
                   onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
-                  className="flex items-center space-x-2 text-gray-700 hover:text-indigo-600 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md" // Added focus styles
+                  className="flex items-center space-x-2 text-gray-700 hover:text-indigo-600 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md"
                 >
                   <User className="w-5 h-5" />
                   <span className="font-medium">{user?.name || "Profile"}</span>
                   <ChevronDown
-                    className={`w-4 h-4 transition-transform ${isProfileDropdownOpen ? 'rotate-180' : ''
+                    className={`w-4 h-4 transition-transform ${isProfileDropdownOpen ? "rotate-180" : ""
                       }`}
                   />
                 </button>
 
                 {isProfileDropdownOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-1 z-10"> {/* Added z-index */}
+                  <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-1 z-10">
                     <Link
                       to="/user-profile"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
                       onClick={() => setIsProfileDropdownOpen(false)}
                     >
-                      My Profile
+                      {t("profile")}
                     </Link>
                     <button
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors"
                     >
-                      Logout
+                      {t("logout")}
                     </button>
                   </div>
-                
                 )}
               </div>
             ) : (
               <div className="flex items-center space-x-3">
-                <Link to="/login" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors">
-                  Sign In
+                <Link
+                  to="/login"
+                  className="text-gray-700 hover:text-indigo-600 font-medium transition-colors"
+                >
+                  {t("Sign In")}
                 </Link>
                 <Link
                   to="/login"
                   className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2.5 rounded-full hover:shadow-lg transform hover:scale-105 transition-all duration-200 font-medium"
                 >
-                  Get Started
+                  {t("Get Started")}
                 </Link>
               </div>
-            )}          
-            </div>
+            )}
+            {/* ✅ Language Selector */}
+            <LanguageSelector />
+          </div>
 
           {/* Mobile menu button */}
           <button
             onClick={toggleMenu}
-            className="md:hidden p-2 rounded-lg text-gray-700 hover:text-indigo-600 hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500" // Added focus styles
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"} // Accessibility
+            className="md:hidden p-2 rounded-lg text-gray-700 hover:text-indigo-600 hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Navigation (conditionally rendered) */}
+      {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 shadow-lg pb-4"> {/* Added pb-4 for better spacing */}
+        <div className="md:hidden bg-white border-t border-gray-100 shadow-lg pb-4">
           <div className="px-4 py-6 space-y-4">
             {navigation.map((item) => (
               <div key={item.name} className="flex flex-col">
@@ -351,48 +346,52 @@ function Header() {
               </div>
             ))}
 
-
             <div className="pt-4 border-t border-gray-100">
               {isAuthenticated ? (
                 <div className="space-y-3">
                   <Link
                     to="/user-profile"
-                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors rounded-md" // Added rounded-md
+                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors rounded-md"
                     onClick={() => {
-                      setIsProfileDropdownOpen(false); // Close dropdown if open
-                      toggleMenu(); // Close mobile menu
+                      setIsProfileDropdownOpen(false);
+                      toggleMenu();
                     }}
                   >
-                    My Profile
+                    {t("profile")}
                   </Link>
                   <button
                     onClick={() => {
-                      handleLogout(); // Perform logout
-                      toggleMenu(); // Close mobile menu
+                      handleLogout();
+                      toggleMenu();
                     }}
-                    className="block w-full text-left px-3 py-2 text-red-600 hover:text-red-700 font-medium rounded-md hover:bg-gray-100" // Added rounded-md and hover background
+                    className="block w-full text-left px-3 py-2 text-red-600 hover:text-red-700 font-medium rounded-md hover:bg-gray-100"
                   >
-                    Sign Out
+                    {t("logout")}
                   </button>
                 </div>
               ) : (
                 <div className="space-y-3">
                   <Link
                     to="/login"
-                    className="block px-3 py-2 text-gray-700 hover:text-indigo-600 font-medium rounded-md hover:bg-gray-50" // Added rounded-md and hover background
+                    className="block px-3 py-2 text-gray-700 hover:text-indigo-600 font-medium rounded-md hover:bg-gray-50"
                     onClick={toggleMenu}
                   >
-                    Sign In
+                    {t("signIn")}
                   </Link>
                   <Link
                     to="/login"
                     className="block bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-full text-center font-medium hover:shadow-lg transform hover:scale-105 transition-all duration-200"
                     onClick={toggleMenu}
                   >
-                    Get Started
+                    {t("getStarted")}
                   </Link>
                 </div>
               )}
+            </div>
+
+            {/* ✅ Language Selector in Mobile */}
+            <div className="px-4 pt-2">
+              <LanguageSelector />
             </div>
           </div>
         </div>

@@ -136,10 +136,21 @@
 // export default Footer
 
 
-import { Link } from "react-router-dom"
-import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react"
+import { Link } from "react-router-dom";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Facebook,
+  Twitter,
+  Instagram,
+  Linkedin,
+} from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -147,15 +158,10 @@ function Footer() {
           {/* Brand */}
           <div className="md:col-span-1">
             <div className="flex items-center space-x-2 mb-6">
-             
-                <img src = "../../niche2.png" alt="PincodeAds Logo"  />
-              {/* <div className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-                PincodeAds
-              </div> */}
+              <img src="../../niche2.png" alt="PincodeAds Logo" />
             </div>
             <p className="text-gray-400 mb-6 leading-relaxed">
-              Your trusted platform for discovering and booking amazing local services. Connect with the best businesses
-              in your area.
+              {t("footer.description")}
             </p>
             <div className="flex space-x-4">
               {[
@@ -179,21 +185,23 @@ function Footer() {
 
           {/* For Customers */}
           <div>
-            <h3 className="text-lg font-bold mb-6 text-white">For Customers</h3>
+            <h3 className="text-lg font-bold mb-6 text-white">
+              {t("footer.customers.title")}
+            </h3>
             <ul className="space-y-3">
               {[
-                { name: "Search Services", path: "/search" },
-                { name: "Book Appointments", path: "/bookings" },
-                { name: "Write Reviews", path: "/reviews" },
-                { name: "Mobile App", path: "/app" },
-                { name: "Help Center", path: "/help" },
+                { key: "search", path: "/search" },
+                { key: "book", path: "/bookings" },
+                { key: "review", path: "/reviews" },
+                { key: "app", path: "/app" },
+                { key: "help", path: "/help" },
               ].map((item) => (
-                <li key={item.name}>
+                <li key={item.key}>
                   <Link
                     to={item.path}
                     className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center space-x-2"
                   >
-                    <span>{item.name}</span>
+                    <span>{t(`footer.customers.${item.key}`)}</span>
                   </Link>
                 </li>
               ))}
@@ -202,18 +210,23 @@ function Footer() {
 
           {/* For Businesses */}
           <div>
-            <h3 className="text-lg font-bold mb-6 text-white">For Businesses</h3>
+            <h3 className="text-lg font-bold mb-6 text-white">
+              {t("footer.businesses.title")}
+            </h3>
             <ul className="space-y-3">
               {[
-                { name: "List Your Business", path: "/list-business" },
-                { name: "Business Dashboard", path: "*" },
-                { name: "Pricing Plans", path: "/pricing" },
-                { name: "Success Stories", path: "/stories" },
-                { name: "Business Resources", path: "/resources" },
+                { key: "list", path: "/list-business" },
+                { key: "dashboard", path: "*" },
+                { key: "pricing", path: "/pricing" },
+                { key: "stories", path: "/stories" },
+                { key: "resources", path: "/resources" },
               ].map((item) => (
-                <li key={item.name}>
-                  <Link to={item.path} className="text-gray-400 hover:text-white transition-colors duration-200">
-                    {item.name}
+                <li key={item.key}>
+                  <Link
+                    to={item.path}
+                    className="text-gray-400 hover:text-white transition-colors duration-200"
+                  >
+                    {t(`footer.businesses.${item.key}`)}
                   </Link>
                 </li>
               ))}
@@ -222,7 +235,9 @@ function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="text-lg font-bold mb-6 text-white">Get in Touch</h3>
+            <h3 className="text-lg font-bold mb-6 text-white">
+              {t("footer.contact.title")}
+            </h3>
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-indigo-400" />
@@ -237,31 +252,40 @@ function Footer() {
                 <span className="text-gray-400">Dahisar, Mumbai</span>
               </div>
             </div>
-
-
           </div>
         </div>
 
         {/* Bottom */}
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm">&copy; 2025  PincodeAds. All rights reserved.</p>
+            <p className="text-gray-400 text-sm">
+              &copy; 2025 PincodeAds. {t("footer.bottom.rights")}
+            </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link to="/privacy" className="text-gray-400 hover:text-white text-sm transition-colors">
-                Privacy Policy
+              <Link
+                to="/privacy"
+                className="text-gray-400 hover:text-white text-sm transition-colors"
+              >
+                {t("footer.bottom.privacy")}
               </Link>
-              <Link to="/terms" className="text-gray-400 hover:text-white text-sm transition-colors">
-                Terms of Service
+              <Link
+                to="/terms"
+                className="text-gray-400 hover:text-white text-sm transition-colors"
+              >
+                {t("footer.bottom.terms")}
               </Link>
-              <Link to="/cookies" className="text-gray-400 hover:text-white text-sm transition-colors">
-                Cookie Policy
+              <Link
+                to="/cookies"
+                className="text-gray-400 hover:text-white text-sm transition-colors"
+              >
+                {t("footer.bottom.cookies")}
               </Link>
             </div>
           </div>
         </div>
       </div>
     </footer>
-  )
+  );
 }
 
-export default Footer
+export default Footer;

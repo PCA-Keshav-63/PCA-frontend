@@ -1,0 +1,37 @@
+{
+  "Home": "Inicio",
+  "Search": "Buscar",
+  "Categories": "Categorías",
+  "About": "Acerca de",
+  "Contact": "Contáctenos",
+  "Sign In": "Iniciar sesión",
+  "Get Started": "Comenzar",
+  "footer": {
+  "description": "Tu plataforma confiable para descubrir y reservar increíbles servicios locales. Conéctate con los mejores negocios de tu zona.",
+  "customers": {
+    "title": "Para Clientes",
+    "search": "Buscar Servicios",
+    "book": "Reservar Citas",
+    "review": "Escribir Reseñas",
+    "app": "Aplicación Móvil",
+    "help": "Centro de Ayuda"
+  },
+  "businesses": {
+    "title": "Para Negocios",
+    "list": "Publica tu Negocio",
+    "dashboard": "Panel de Negocios",
+    "pricing": "Planes de Precios",
+    "stories": "Historias de Éxito",
+    "resources": "Recursos Empresariales"
+  },
+  "contact": {
+    "title": "Ponte en Contacto"
+  },
+  "bottom": {
+    "rights": "Todos los derechos reservados.",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos del Servicio",
+    "cookies": "Política de Cookies"
+  }
+}
+}

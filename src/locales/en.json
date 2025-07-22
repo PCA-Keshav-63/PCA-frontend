@@ -1,0 +1,38 @@
+{
+  "Home": "Home",
+  "Search": "Search",
+  "Categories": "Categories",
+  "About": "About",
+  "Contact": "Contact Us",
+  "Sign In": "Sign In",
+  "Get Started": "Get Started",
+  "footer": {
+    "description": "Your trusted platform for discovering and booking amazing local services. Connect with the best businesses in your area.",
+    "customers": {
+      "title": "For Customers",
+      "search": "Search Services",
+      "book": "Book Appointments",
+      "review": "Write Reviews",
+      "app": "Mobile App",
+      "help": "Help Center"
+    },
+    "businesses": {
+      "title": "For Businesses",
+      "list": "List Your Business",
+      "dashboard": "Business Dashboard",
+      "pricing": "Pricing Plans",
+      "stories": "Success Stories",
+      "resources": "Business Resources"
+    },
+    "contact": {
+      "title": "Get in Touch"
+    },
+    "bottom": {
+      "rights": "All rights reserved.",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "cookies": "Cookie Policy"
+    }
+  }
+
+}

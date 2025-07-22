@@ -45,10 +45,12 @@ import App from "./App.jsx";
 import { AppProvider } from "./context/AppContext.jsx";
 import "./styles/index.css";
 import { useAuthStore } from "./store/authStore";
+import "./i18n"; // ✅ Import the i18n configuration
 
 function Root() {
   const checkAuth = useAuthStore((state) => state.checkAuth);
 
+  // Optionally check auth on load (disabled for now)
   // React.useEffect(() => {
   //   checkAuth();
   // }, [checkAuth]);
