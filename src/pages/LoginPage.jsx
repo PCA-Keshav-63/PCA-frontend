@@ -650,7 +650,7 @@ function LoginPage() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phoneNumber: "",
+    phone_number: "",
     password: "",
     confirmPassword: "",
   });
@@ -658,7 +658,7 @@ function LoginPage() {
   const [validationErrors, setValidationErrors] = useState({
     password: [],
     confirmPassword: null,
-    phoneNumber: null,
+    phone_number: null,
   });
 
   // OTP state
@@ -697,10 +697,10 @@ function LoginPage() {
     setValidationErrors((prev) => ({ ...prev, confirmPassword: error }));
     return !error;
   };
-  const validatephoneNumber = (phoneNumber) => {
-    const digitsOnly = phoneNumber.replace(/\D/g, "");
-    const error = digitsOnly.length !== 10 ? "phoneNumber number must be exactly 10 digits" : null;
-    setValidationErrors((prev) => ({ ...prev, phoneNumber: error }));
+  const validatephoneNumber = (phone_number) => {
+    const digitsOnly = phone_number.replace(/\D/g, "");
+    const error = digitsOnly.length !== 10 ? "Phone Number number must be exactly 10 digits" : null;
+    setValidationErrors((prev) => ({ ...prev, phone_number: error }));
     return !error;
   };
 
@@ -730,7 +730,7 @@ function LoginPage() {
   const handleRegister = async () => {
     const isPasswordValid = validatePassword(formData.password);
     const isConfirmPasswordValid = validateConfirmPassword(formData.password, formData.confirmPassword);
-    const isphoneNumberValid = validatephoneNumber(formData.phoneNumber);
+    const isphoneNumberValid = validatephoneNumber(formData.phone_number);
 
     if (!isPasswordValid || !isConfirmPasswordValid || !isphoneNumberValid) return;
 
@@ -741,7 +741,7 @@ function LoginPage() {
         email: formData.email,
         password: formData.password,
         role: userType === "business" ? "BUSINESS" : "USER",
-        phoneNumber: formData.phoneNumber,
+        phone_number: formData.phone_number,
       });
 
       // Send OTP using authStore and pass email
@@ -936,8 +936,8 @@ function LoginPage() {
                       maxLength={14}
                     />
                   </div>
-                  {validationErrors.phoneNumber && (
-                    <p className="mt-1 text-sm text-red-600 font-semibold">{validationErrors.phoneNumber}</p>
+                  {validationErrors.phone_number && (
+                    <p className="mt-1 text-sm text-red-600 font-semibold">{validationErrors.phone_number}</p>
                   )}
                 </div>
               )}
