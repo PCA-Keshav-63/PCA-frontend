@@ -24,6 +24,8 @@ function BusinessCard({ business }) {
     timings,
     keywordsJson,
     phoneNumbersJson,
+    lat,
+    lng,
     images,
     business: businessOwner,
     rating,
@@ -234,11 +236,22 @@ function BusinessCard({ business }) {
             )}
 
             {fullAddress && (
-              <div className="flex items-start mb-2">
-                <MapPin className="w-4 h-4 text-red-500 mt-0.5 mr-2 flex-shrink-0" />
-                <span className="text-sm text-gray-700">{fullAddress}</span>
-              </div>
-            )}
+  <div className="flex items-start mb-2">
+    {lat && lng ? (
+      <a
+        href={`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-0.5 mr-2 flex-shrink-0"
+      >
+        <MapPin className="w-4 h-4 text-red-500 hover:text-red-700" />
+      </a>
+    ) : (
+      <MapPin className="w-4 h-4 text-gray-400 mt-0.5 mr-2 flex-shrink-0" />
+    )}
+    <span className="text-sm text-gray-700">{fullAddress}</span>
+  </div>
+)}
 
             <div className="flex items-center gap-4 mb-3 text-sm flex-wrap">
               {timings && (
