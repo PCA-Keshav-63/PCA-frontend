@@ -778,7 +778,7 @@ const getCityForPincode = (pincode) => {
               { number: "4000+", label: "Total Listings" },
               { number: "0", label: "Happy Customers" },
               { number: "0", label: "Successful Bookings" },
-              { number: "43", label: "Pincodes Covered" },
+              { number: "44", label: "Pincodes Covered" },
             ].map((stat, index) => (
               <div key={index} className="text-center">
                 <div className="text-3xl md:text-4xl font-bold text-white mb-2">
