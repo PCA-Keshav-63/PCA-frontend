@@ -31,7 +31,7 @@ const TranslateWidget = () => {
       id="google_translate_element"
       className="mt-2 mb-4"
       style={{
-        transform: "scale(0.75)",           // 🔍 Shrinks the widget to 85%
+        transform: "scale(0.7)",           // 🔍 Shrinks the widget to 85%
         transformOrigin: "top left",        // Align scaling from top-left
         display: "inline-block",            // Prevent overflow/stretching
       }}
