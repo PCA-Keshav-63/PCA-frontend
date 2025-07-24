@@ -183,15 +183,13 @@ import { Link } from "react-router-dom";
 import { Menu, X, User, LogOut, ChevronDown } from "lucide-react";
 import { useAuthStore } from "../../store/authStore";
 import { useApp } from "../../context/AppContext.jsx";
-import { useTranslation } from "react-i18next"; // ✅ i18next
-import LanguageSelector from "../common/LanguageSelector"; // ✅ Language dropdown
+import TranslateWidget from "../common/TranslateWidget"; // ✅ GTranslate component
 
 function Header() {
   const { state, dispatch } = useApp();
   const { isMenuOpen } = state;
   const { user, isAuthenticated, checkAuth, logout } = useAuthStore();
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
-  const { t } = useTranslation(); // ✅ translation hook
 
   useEffect(() => {
     checkAuth();
@@ -214,11 +212,11 @@ function Header() {
   };
 
   const navigation = [
-    { name: t("Home"), path: "/" },
-    { name: t("Search"), path: "/search" },
-    { name: t("Categories"), path: "/categories" },
-    { name: t("About"), path: "/about" },
-    { name: t("Contact"), path: "/contact-us", number: "8452-81-3108" },
+    { name: "Home", path: "/" },
+    { name: "Search", path: "/search" },
+    { name: "Categories", path: "/categories" },
+    { name: "About", path: "/about" },
+    { name: "Contact", path: "/contact-us", number: "8452-81-3108" },
   ];
 
   return (
@@ -285,13 +283,13 @@ function Header() {
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
                       onClick={() => setIsProfileDropdownOpen(false)}
                     >
-                      {t("profile")}
+                      Profile
                     </Link>
                     <button
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors"
                     >
-                      {t("logout")}
+                      Logout
                     </button>
                   </div>
                 )}
@@ -302,18 +300,18 @@ function Header() {
                   to="/login"
                   className="text-gray-700 hover:text-indigo-600 font-medium transition-colors"
                 >
-                  {t("Sign In")}
+                  Sign In
                 </Link>
                 <Link
                   to="/login"
                   className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2.5 rounded-full hover:shadow-lg transform hover:scale-105 transition-all duration-200 font-medium"
                 >
-                  {t("Get Started")}
+                  Get Started
                 </Link>
               </div>
             )}
-            {/* ✅ Language Selector */}
-            <LanguageSelector />
+            {/* ✅ GTranslate Language Widget */}
+            <TranslateWidget />
           </div>
 
           {/* Mobile menu button */}
@@ -357,7 +355,7 @@ function Header() {
                       toggleMenu();
                     }}
                   >
-                    {t("profile")}
+                    Profile
                   </Link>
                   <button
                     onClick={() => {
@@ -366,7 +364,7 @@ function Header() {
                     }}
                     className="block w-full text-left px-3 py-2 text-red-600 hover:text-red-700 font-medium rounded-md hover:bg-gray-100"
                   >
-                    {t("logout")}
+                    Logout
                   </button>
                 </div>
               ) : (
@@ -376,22 +374,22 @@ function Header() {
                     className="block px-3 py-2 text-gray-700 hover:text-indigo-600 font-medium rounded-md hover:bg-gray-50"
                     onClick={toggleMenu}
                   >
-                    {t("signIn")}
+                    Sign In
                   </Link>
                   <Link
                     to="/login"
                     className="block bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-full text-center font-medium hover:shadow-lg transform hover:scale-105 transition-all duration-200"
                     onClick={toggleMenu}
                   >
-                    {t("getStarted")}
+                    Get Started
                   </Link>
                 </div>
               )}
             </div>
 
-            {/* ✅ Language Selector in Mobile */}
+            {/* ✅ Mobile Language Widget */}
             <div className="px-4 pt-2">
-              <LanguageSelector />
+              <TranslateWidget />
             </div>
           </div>
         </div>

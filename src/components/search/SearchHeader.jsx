@@ -70,47 +70,18 @@ function SearchHeader() {
   const locationInputRef = useRef(null)
 
   const pincodeToCityMap = {
-    "400014": "Dadar",
-    "400050": "Bandra",
-    "400055": "Santacruz",
-    "400057": "Vile Parle",
-    "400058": "Andheri",
-    "400063": "Goregaon",
-    "400064": "Malad",
-    "400066": "Borivali",
-    "400067": "Kandivali",
-    "400068": "Dahisar",
-    "400070": "Kurla",
-    "400092": "Borivali",
-    "401101": "Mira Bhayandar",
-    "401104": "Mira Bhayandar",
-    "401105": "Mira Bhayandar",
-    "401106": "Mira Bhayandar",
-    "401107": "Mira Bhayandar",
-    "401107": "Mira Road",
-    "401202": "Vasai",
-    "401203": "Mira Bhayandar",
-    "401208": "Mira Bhayandar",
-    "421301": "Mira Bhayandar",
-    "421306": "Mira Bhayandar",
-    "421401": "Mira Bhayandar",
-    "421601": "Mira Bhayandar",
-    "424001": "Dhule",
-    "424002": "Dhule",
-    "424004": "Dhule",
-    "424005": "Dhule",
-    "424006": "Dhule",
-    "424311": "Dhule",
-    "425401": "Dhule",
-    "425405": "Dhule",
-    "425418": "Navapur",
-    "425421": "Dhule"
-}
+    "400014": "Dadar", "400050": "Bandra", "400055": "Santacruz", "400057": "Vile Parle",
+    "400058": "Andheri", "400063": "Goregaon", "400064": "Malad", "400066": "Borivali",
+    "400067": "Kandivali", "400068": "Dahisar", "400070": "Kurla", "400092": "Borivali",
+    "401101": "Mira Bhayandar", "401104": "Mira Bhayandar", "401105": "Mira Bhayandar",
+    "401106": "Mira Bhayandar", "401107": "Mira Road", "401202": "Vasai", "401203": "Mira Bhayandar",
+    "401208": "Mira Bhayandar", "421301": "Mira Bhayandar", "421306": "Mira Bhayandar",
+    "421401": "Mira Bhayandar", "421601": "Mira Bhayandar", "424001": "Dhule", "424002": "Dhule",
+    "424004": "Dhule", "424005": "Dhule", "424006": "Dhule", "424311": "Dhule", "425401": "Dhule",
+    "425405": "Dhule", "425418": "Navapur", "425421": "Dhule"
+  }
 
-const getCityForPincode = (pincode) => {
-  return pincodeToCityMap[pincode] || ""
-}
-
+  const getCityForPincode = (pincode) => pincodeToCityMap[pincode] || ""
 
   const reverseGeocode = async (lat, lon) => {
     try {
@@ -121,14 +92,7 @@ const getCityForPincode = (pincode) => {
       const data = await res.json()
       const address = data.address
       const pincode = address.postcode || ""
-      const locationLabel =
-        address.city ||
-        address.town ||
-        address.village ||
-        address.county ||
-        address.district ||
-        address.state ||
-        ""
+      const locationLabel = address.city || address.town || address.village || address.county || address.district || address.state || ""
       return { pincode, locationLabel }
     } catch {
       return null
@@ -136,30 +100,22 @@ const getCityForPincode = (pincode) => {
   }
 
   useEffect(() => {
-    if (!location) {
-      if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(
-          async (position) => {
-            const { latitude, longitude } = position.coords
-            const result = await reverseGeocode(latitude, longitude)
-            if (result) {
-              const locValue = result.pincode || result.locationLabel || ""
-              if (locValue) {
-                dispatch({ type: "SET_LOCATION", payload: locValue })
-              }
-            }
-          },
-          () => {},
-          { timeout: 10000 }
-        )
-      }
+    if (!location && "geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords
+        const result = await reverseGeocode(latitude, longitude)
+        if (result) {
+          const locValue = result.pincode || result.locationLabel || ""
+          if (locValue) dispatch({ type: "SET_LOCATION", payload: locValue })
+        }
+      }, () => {}, { timeout: 10000 })
     }
   }, [dispatch])
 
   const fetchSuggestions = async (fields, value) => {
     const promises = fields.map(field =>
       fetch(`https://pincodeads.onrender.com/api/v1.0/services/autocomplete/${field}?query=${encodeURIComponent(value)}`)
-        .then(res => (res.ok ? res.json() : []))
+        .then(res => res.ok ? res.json() : [])
         .catch(() => [])
     )
     const results = await Promise.all(promises)
@@ -243,9 +199,8 @@ const getCityForPincode = (pincode) => {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+    <div className="bg-white rounded-lg shadow-sm p-6 mb-8 notranslate" translate="no">
       <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-4">
-        {/* Service Search Input */}
         <div className="flex-1 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           <input
@@ -256,17 +211,14 @@ const getCityForPincode = (pincode) => {
             onChange={handleServiceChange}
             onFocus={() => setShowServiceSuggestions(serviceSuggestions.length > 0)}
             onKeyDown={handleKeyDown}
-            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 notranslate"
+            translate="no"
             autoComplete="off"
           />
           {showServiceSuggestions && serviceSuggestions.length > 0 && (
             <ul className="absolute z-10 left-0 right-0 bg-white border rounded-lg mt-1 shadow-lg max-h-56 overflow-y-auto">
               {serviceSuggestions.map((s, idx) => (
-                <li
-                  key={idx}
-                  className="px-4 py-2 cursor-pointer hover:bg-blue-100"
-                  onClick={() => handleServiceSuggestionClick(s)}
-                >
+                <li key={idx} className="px-4 py-2 cursor-pointer hover:bg-blue-100" onClick={() => handleServiceSuggestionClick(s)}>
                   {s}
                 </li>
               ))}
@@ -274,7 +226,6 @@ const getCityForPincode = (pincode) => {
           )}
         </div>
 
-        {/* Location Input */}
         <div className="flex-1 relative">
           <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           <input
@@ -285,7 +236,8 @@ const getCityForPincode = (pincode) => {
             onChange={handleLocationChange}
             onFocus={() => setShowLocationSuggestions(locationSuggestions.length > 0)}
             onKeyDown={handleKeyDown}
-            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 notranslate"
+            translate="no"
             autoComplete="off"
           />
           {showLocationSuggestions && locationSuggestions.length > 0 && (
@@ -294,67 +246,38 @@ const getCityForPincode = (pincode) => {
                 {locationSuggestions.some((s) => /^\d{6}$/.test(s)) && (
                   <li className="px-4 py-1 text-xs text-gray-500 bg-gray-50">Pincodes</li>
                 )}
-                {locationSuggestions
-  .filter((s) => /^\d{6}$/.test(s))
-  .map((s, idx) => {
-    const city = getCityForPincode(s) // 👈 helper function to map pincode to city
-    return (
-      <li
-        key={`pin-${idx}`}
-        className="px-4 py-2 cursor-pointer hover:bg-blue-100"
-        onClick={() => handleLocationSuggestionClick(s)}
-      >
-        {city ? `${s} - ${city}` : s}
-      </li>
-    )
-  })}
-
+                {locationSuggestions.filter((s) => /^\d{6}$/.test(s)).map((s, idx) => {
+                  const city = getCityForPincode(s)
+                  return (
+                    <li key={`pin-${idx}`} className="px-4 py-2 cursor-pointer hover:bg-blue-100" onClick={() => handleLocationSuggestionClick(s)}>
+                      {city ? `${s} - ${city}` : s}
+                    </li>
+                  )
+                })}
 
                 {locationSuggestions.some((s) => !/^\d{6}$/.test(s)) && (
                   <li className="px-4 py-1 text-xs text-gray-500 bg-gray-50">Cities</li>
                 )}
-                {locationSuggestions
-                  .filter((s) => !/^\d{6}$/.test(s))
-                  .map((s, idx) => (
-                    <li
-                      key={`city-${idx}`}
-                      className="px-4 py-2 cursor-pointer hover:bg-blue-100"
-                      onClick={() => handleLocationSuggestionClick(s)}
-                    >
-                      {s}
-                    </li>
-                  ))}
+                {locationSuggestions.filter((s) => !/^\d{6}$/.test(s)).map((s, idx) => (
+                  <li key={`city-${idx}`} className="px-4 py-2 cursor-pointer hover:bg-blue-100" onClick={() => handleLocationSuggestionClick(s)}>
+                    {s}
+                  </li>
+                ))}
               </>
             </ul>
           )}
         </div>
 
-        {/* Submit Button with Loading Spinner */}
         <button
           type="submit"
-          className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold flex items-center justify-center gap-2 disabled:opacity-50"
+          className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold flex items-center justify-center gap-2 disabled:opacity-50 notranslate"
+          translate="no"
           disabled={searching}
         >
           {searching && (
-            <svg
-              className="animate-spin h-5 w-5 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-              ></path>
+            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
             </svg>
           )}
           {searching ? "Searching..." : "Search"}

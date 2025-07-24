@@ -230,12 +230,9 @@ import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Sparkles, AlertTriangle, Clock } from "lucide-react";
 import { useApp } from "../../context/AppContext.jsx";
 import { toast } from "react-hot-toast";
-import { useTranslation } from "react-i18next"; // ✅ i18next
-import LanguageSelector from "../common/LanguageSelector"; // ✅ Language dropdown
 
 export default function HeroSection() {
   const { state, dispatch } = useApp();
-  const { t } = useTranslation(); // ✅ translation hook
   const { searchQuery, location } = state;
   const serviceFields = [
     "title",
@@ -245,7 +242,7 @@ export default function HeroSection() {
     "keyword",
   ];
   const [searching, setSearching] = useState(false);
-  const locationFields = ["pincode", "district", "city"];
+  const locationFields = ["address", "pincode", "district", "city"];
 
   const navigate = useNavigate();
 
@@ -634,7 +631,7 @@ const getCityForPincode = (pincode) => {
           <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md rounded-full px-6 py-3 mb-6">
             <Sparkles className="w-5 h-5 text-yellow-300" />
             <span className="text-white font-medium">
-              {t("Discover Amazing Local Businesses")}
+              Discover Amazing Local Businesses
             </span>
           </div>
 
@@ -646,7 +643,8 @@ const getCityForPincode = (pincode) => {
           </h1>
 
           <p className="text-xl md:text-2xl text-indigo-100 mb-12 leading-relaxed">
-            {t("Connect with trusted local businesses, book services instantly, and discover hidden gems in your neighborhood")}
+            Connect with trusted local businesses, book services instantly, and
+            discover hidden gems in your neighborhood
           </p>
 
           <form onSubmit={handleSearch} className="mb-16">
@@ -657,7 +655,7 @@ const getCityForPincode = (pincode) => {
                   ref={serviceInputRef}
                   type="text"
                   aria-label="Service search input"
-                  placeholder={t("What service are you looking for?")}
+                  placeholder="What service are you looking for?"
                   value={searchQuery}
                   onChange={handleServiceChange}
                   onFocus={() =>
@@ -742,7 +740,7 @@ const getCityForPincode = (pincode) => {
 
               <button
                 type="submit"
-                className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-4 rounded-xl hover:shadow-xl transform hover:scale-105 transition-all duration-200 font-semibold text-lg flex items-center justify-center gap-2"
+                className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-4 rounded-xl hover:shadow-xl transform hover:scale-105 transition-all duration-200 font-semibold text-lg flex items-center justify-center gap-2 notranslate"
                 aria-label="Search"
                 disabled={searching}
               >
