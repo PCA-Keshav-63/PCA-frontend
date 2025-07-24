@@ -15,7 +15,7 @@ const TranslateWidget = () => {
         new window.google.translate.TranslateElement(
           {
             pageLanguage: "en",
-            includedLanguages: "en,hi,mr,gu", // Customize this
+            includedLanguages: "en,hi,mr,gu", // Only English, Hindi, Marathi, Gujarati
             layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
           },
           "google_translate_element"
@@ -27,7 +27,15 @@ const TranslateWidget = () => {
   }, []);
 
   return (
-    <div id="google_translate_element" className="mt-2 mb-4"></div>
+    <div
+      id="google_translate_element"
+      className="mt-2 mb-4"
+      style={{
+        transform: "scale(0.75)",           // 🔍 Shrinks the widget to 85%
+        transformOrigin: "top left",        // Align scaling from top-left
+        display: "inline-block",            // Prevent overflow/stretching
+      }}
+    ></div>
   );
 };
 
