@@ -332,10 +332,10 @@ function AboutPage() {
   const team = [
     {
       name: "Drivyaansh Yadav",
-      role: "Full-Stack developer",
-      bio: "Drivyaansh is a curious and committed Computer Engineering student with a keen interest in software development and system design.",
+      role: "Full-Stack Gooner",
+      bio: "Drivyaansh is a full-time gooner, part-time human. Known for unmatched stamina, laser focus, and an unhealthy commitment to the craft, he’s been called the ‘Final Boss of Buffing.’ When not deep in the zone, he enjoys long buffering videos, whispering sweet nothings to his Wi-Fi router, and respectfully declining social interaction. A true legend in the lotion-slicked halls of history",
       color: "from-purple-500 to-violet-500",
-      img: "../Drivyaansh.png",
+      img: "../Drivyaansh2.png",
       linkedin: "https://www.linkedin.com/in/drivyaansh-yadav-85a070296",
     },
     {
