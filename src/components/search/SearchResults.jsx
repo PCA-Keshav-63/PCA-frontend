@@ -65,7 +65,7 @@ function SearchResults({ filters, results = [] }) {
   // Fetch nearby services when location is available
   useEffect(() => {
     if (location.lat !== null && location.lng !== null) {
-      const url = `https://pca.pincodeads.com/api/nearby?lat=${location.lat}&lng=${location.lng}&radiusKm=10`
+      const url = `https://pca.pincodeads.com/api/v1.0/services/nearby?lat=${location.lat}&lng=${location.lng}&radiusKm=10`
       console.log("Fetching nearby services from:", url)
 
       fetch(url)
